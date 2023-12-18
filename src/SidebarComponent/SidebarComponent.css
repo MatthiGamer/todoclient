@@ -1,0 +1,11 @@
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 33.333%;
+    background-color: #333; /* Set your desired background color */
+    color: #fff; /* Set your desired text color */
+    padding: 20px; /* Set padding as needed */
+    box-sizing: border-box;
+}

@@ -1,0 +1,10 @@
+.main-container {
+    display: flex;
+    height: 100vh; /* Set height to fill the viewport */
+  }
+  
+  .main-content {
+    flex: 1; /* Make the main content take up the remaining width */
+    padding: 20px; /* Set padding as needed */
+    box-sizing: border-box;
+  }
