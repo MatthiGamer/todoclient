@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import SignalRComponent from './SignalRComponent';
-import MainComponent from './MainComponent/MainComponent';
+import MainComponent from './Components/MainComponent/MainComponent';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
