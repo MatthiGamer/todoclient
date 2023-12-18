@@ -6,6 +6,7 @@
     width: 33.333%;
     background-color: var(--secondary-color);
     color: var(--text-color);
-    padding: 15px;
+    padding: var(--padding);
     box-sizing: border-box;
 }
+  

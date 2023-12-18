@@ -2,10 +2,11 @@
     display: flex;
     height: 100vh; /* Set height to fill the viewport */
     background-color: var(--primary-color);
+    justify-content: right;
   }
   
   .main-content {
-    flex: 1; /* Make the main content take up the remaining width */
-    padding: 20px; /* Set padding as needed */
+    flex: 0.66; /* Make the main content take up the remaining width */
+    padding: var(--padding);
     box-sizing: border-box;
   }

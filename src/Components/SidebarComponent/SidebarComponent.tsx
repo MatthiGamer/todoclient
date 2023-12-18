@@ -4,7 +4,7 @@ import TitleComponent from '../TitleComponent/TitleComponent';
 
 const SidebarComponent: React.FC = () => {
   return (
-    <div id="sidebar">
+    <div id="sidebar" className="sidebar">
       <TitleComponent title='TO DO'/>
       {/* Sidebar content goes here */}
     </div>
