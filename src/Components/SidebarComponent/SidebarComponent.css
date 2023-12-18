@@ -4,8 +4,8 @@
     left: 0;
     height: 100%;
     width: 33.333%;
-    background-color: #333; /* Set your desired background color */
-    color: #fff; /* Set your desired text color */
+    background-color: #2F2F4F;
+    color: #FFFFFF; /* Set your desired text color */
     padding: 20px; /* Set padding as needed */
     box-sizing: border-box;
 }
