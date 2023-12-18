@@ -1,14 +1,15 @@
 import React from "react";
 import "./TitleComponent.css";
 
-interface TitleProps{
+interface TitleComponentProps{
     title: string;
+    color?: string;
 }
 
-const TitleComponent: React.FC<TitleProps> = (props) => {
+const TitleComponent: React.FC<TitleComponentProps> = (props) => {
     return (
         <div className="titleContainer">
-            <h1>{props.title}</h1>
+            <h1 style={{color: props.color}}>{props.title}</h1>
         </div>
     )
 }

@@ -6,4 +6,5 @@
     min-height: 10px;
     text-align: center;
     font-size: large;
+    color: var(--text-color);
 }
