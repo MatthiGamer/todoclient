@@ -1,7 +1,7 @@
 .main-container {
     display: flex;
     height: 100vh; /* Set height to fill the viewport */
-    background-color: #8F8FAF;
+    background-color: var(--primary-color);
   }
   
   .main-content {
