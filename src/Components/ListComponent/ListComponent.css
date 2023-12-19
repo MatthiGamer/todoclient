@@ -13,3 +13,7 @@ button{
 button:hover{
     background-color: #FFFFFF22;
 }
+
+button:active{
+    background-color: #00000022;
+}
