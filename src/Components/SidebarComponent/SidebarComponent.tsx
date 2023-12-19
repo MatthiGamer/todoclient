@@ -10,7 +10,9 @@ const SidebarComponent: React.FC = () => {
     <div id="sidebar" className="sidebar">
       <TitleComponent title='TO DO APPLICATION' color={PRIMARY_COLOR}/>
       <DividerComponent color={PRIMARY_COLOR}/>
-      <ListComponent color={PRIMARY_COLOR}/>
+      <ListComponent name='Today' color={PRIMARY_COLOR}/>
+      <ListComponent name='Important' color={PRIMARY_COLOR}/>
+      <ListComponent name='Optional' color={PRIMARY_COLOR}/>
     </div>
   );
 };
