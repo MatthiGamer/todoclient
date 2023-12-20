@@ -6,6 +6,7 @@ import { PRIMARY_COLOR } from '../../Colors';
 import ListComponent from '../ListComponent/ListComponent';
 
 const SidebarComponent: React.FC = () => {
+  // Styled Components?
   return (
     <div id="sidebar" className="sidebar">
       <TitleComponent title='TO DO APPLICATION' color={PRIMARY_COLOR}/>
@@ -13,6 +14,8 @@ const SidebarComponent: React.FC = () => {
       <ListComponent name='Today' color={PRIMARY_COLOR}/>
       <ListComponent name='Important' color={PRIMARY_COLOR}/>
       <ListComponent name='Optional' color={PRIMARY_COLOR}/>
+      <DividerComponent color={PRIMARY_COLOR}/>
+      <ListComponent name='New List' color={PRIMARY_COLOR}/>
     </div>
   );
 };
