@@ -4,11 +4,17 @@ import "./ListComponent.css";
 interface ListComponentProps{
     name: string;
     color?: string;
+    setListName: (name: string) => void;
 }
 
 const ListComponent: React.FC<ListComponentProps> = (props) => {
+
+    const HandleOnClick = () => {
+        props.setListName(props.name);
+    }
+
     return (
-        <button style={{borderColor: props.color, color: props.color}}>{props.name}</button>
+        <button style={{borderColor: props.color, color: props.color}} onClick={HandleOnClick}>{props.name}</button>
     )
 }
 
