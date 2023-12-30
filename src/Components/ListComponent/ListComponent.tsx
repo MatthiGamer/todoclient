@@ -9,6 +9,7 @@ interface ListComponentProps{
 
 const ListComponent: React.FC<ListComponentProps> = (props) => {
 
+    // Try Context API
     const HandleOnClick = () => {
         props.setListName(props.name);
     }
