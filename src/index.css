@@ -4,6 +4,9 @@
   --accent-color: #CF5F5F;
   --text-color: #FFFFFF;
 
+  --low-alpha-white: #FFFFFF22;
+  --low-alpha-black: #00000022;
+
   --padding: 15px;
 }
 

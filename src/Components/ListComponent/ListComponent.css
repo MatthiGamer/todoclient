@@ -12,9 +12,9 @@ button{
 }
 
 button:hover{
-    background-color: #FFFFFF22;
+    background-color: var(--low-alpha-white);
 }
 
 button:active{
-    background-color: #00000022;
+    background-color: var(--low-alpha-black);
 }
