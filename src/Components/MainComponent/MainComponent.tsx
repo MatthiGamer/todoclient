@@ -4,6 +4,7 @@ import './MainComponent.css';
 import TitleComponent from '../TitleComponent/TitleComponent';
 import DividerComponent from '../DividerComponent/DividerComponent';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../Colors';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const MainComponent: React.FC = () => {
 
@@ -16,6 +17,7 @@ const MainComponent: React.FC = () => {
         {/* Main content goes here */}
         <TitleComponent title={listName} color={SECONDARY_COLOR}/>
         <DividerComponent color={listName == "" ? PRIMARY_COLOR : SECONDARY_COLOR}/>
+        <ButtonComponent name='Test Item' color={SECONDARY_COLOR}/>
       </div>
     </div>
   );

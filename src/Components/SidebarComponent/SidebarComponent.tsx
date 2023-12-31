@@ -3,7 +3,7 @@ import './SidebarComponent.css';
 import TitleComponent from '../TitleComponent/TitleComponent';
 import DividerComponent from '../DividerComponent/DividerComponent';
 import { PRIMARY_COLOR } from '../../Colors';
-import ListComponent from '../ListComponent/ListComponent';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 interface SidebarComponentProps{
   setListName: (name: string) => void;
@@ -31,9 +31,9 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
       <DividerComponent color={SIDEBAR_COMPONENT_COLOR}/>
       
       {primaryLists.map((list) => (
-        <ListComponent
+        <ButtonComponent
           key={list.name}
-          setListName={setListName}
+          method={setListName}
           name={list.name}
           color={SIDEBAR_COMPONENT_COLOR}
         />
@@ -42,9 +42,9 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
       <DividerComponent color={SIDEBAR_COMPONENT_COLOR}/>
 
       {userLists.map((list) => (
-        <ListComponent
+        <ButtonComponent
           key={list.name}
-          setListName={setListName}
+          method={setListName}
           name={list.name}
           color={SIDEBAR_COMPONENT_COLOR}
         />
