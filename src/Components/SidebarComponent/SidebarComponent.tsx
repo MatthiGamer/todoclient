@@ -23,10 +23,6 @@ const userLists = [
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
 
-  const handleButtonClick = (name: string) => {
-    setListName(name);
-  }
-
   // Styled Components?
   return (
     <div id="sidebar" className="sidebar">
