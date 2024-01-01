@@ -1,0 +1,13 @@
+#ListItemContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#ListItemContainer > :nth-child(1) {
+    margin-right: 10px;
+}
+
+#favStar{
+    height: 40px;
+    width: 40px;
+}
