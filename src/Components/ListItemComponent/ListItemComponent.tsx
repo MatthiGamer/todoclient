@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import "./ListItemComponent.css";
 
@@ -10,6 +10,12 @@ interface ListItemComponentProps{
 
 const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
+    const [isImportant, setIsImportant] = useState<boolean>(false);
+
+    const HandleOnClickStar = () => {
+        setIsImportant(!isImportant);
+    }
+
     const HandleOnClick = () => {
         // Open Info Panel
     }
@@ -17,7 +23,11 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
     return(
         <div id="ListItemContainer">
             <ButtonComponent title={props.title} color={props.color} OnClick={HandleOnClick}/>
-            <button id="favStar" style={{borderColor: props.color, color: props.color}}>⭐</button>
+            <button
+                id="favStar"
+                style={{borderColor: props.color, color: props.color}}
+                onClick={HandleOnClickStar}>{isImportant ? "⭐" : ""}
+            </button>
         </div>
     )
 }
