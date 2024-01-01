@@ -2,20 +2,15 @@ import React from "react";
 import "./ButtonComponent.css";
 
 interface ButtonComponentProps{
-    name: string;
+    title: string;
     color?: string;
-    method?: (name: string) => void;
+    OnClick?: () => void;
 }
 
 const ButtonComponent: React.FC<ButtonComponentProps> = (props) => {
 
-    const HandleOnClick = () => {
-        if (props.method == undefined) return;
-        props.method(props.name);
-    }
-
     return (
-        <button style={{borderColor: props.color, color: props.color}} onClick={HandleOnClick}>{props.name}</button>
+        <button style={{borderColor: props.color, color: props.color}} onClick={props.OnClick}>{props.title}</button>
     )
 }
 

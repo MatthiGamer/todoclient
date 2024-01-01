@@ -17,7 +17,11 @@ const MainComponent: React.FC = () => {
         {/* Main content goes here */}
         <TitleComponent title={listName} color={SECONDARY_COLOR}/>
         <DividerComponent color={listName == "" ? PRIMARY_COLOR : SECONDARY_COLOR}/>
-        <ButtonComponent name='Test Item' color={SECONDARY_COLOR}/>
+        <ButtonComponent title='Test Item' color={SECONDARY_COLOR}/>
+        <button>
+          <p>Test</p>
+          <h3>Hello World</h3>
+        </button>
       </div>
     </div>
   );
