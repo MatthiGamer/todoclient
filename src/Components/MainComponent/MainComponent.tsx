@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import SidebarComponent from '../SidebarComponent/SidebarComponent';
 import './MainComponent.css';
-import TitleComponent from '../TitleComponent/TitleComponent';
-import DividerComponent from '../DividerComponent/DividerComponent';
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../Colors';
-import ListItemComponent from '../ListItemComponent/ListItemComponent';
+import MainContainerComponent from '../MainContainerComponent/MainContainerComponent';
 
 const MainComponent: React.FC = () => {
 
@@ -14,9 +11,7 @@ const MainComponent: React.FC = () => {
     <div className="main-container">
       <SidebarComponent setListName={setListName}/>
       <div className="main-content">
-        {/* Main content goes here */}
-        <TitleComponent title={listName} color={SECONDARY_COLOR}/>
-        <DividerComponent color={listName == "" ? PRIMARY_COLOR : SECONDARY_COLOR}/>
+        <MainContainerComponent listName={listName}/>
       </div>
     </div>
   );
