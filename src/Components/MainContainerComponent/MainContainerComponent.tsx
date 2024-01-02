@@ -6,6 +6,7 @@ import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMai
 
 interface MainContainerComponentProps{
     listName: string;
+    // List of all items
 }
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {

@@ -1,0 +1,11 @@
+#EmptyMainContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#EmptyMainContent > * {
+    margin: 2px;
+}
