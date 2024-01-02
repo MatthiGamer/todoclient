@@ -2,4 +2,5 @@ hr{
   border: none;
   height: 2px;
   color: var(--text-color);
+  margin-top: 14px;
 }

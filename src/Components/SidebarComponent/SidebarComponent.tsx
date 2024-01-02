@@ -23,10 +23,16 @@ const userLists = [
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
 
+  const HandleOnClick = () => {
+    setListName("");
+  }
+
   // Styled Components?
   return (
     <div id="sidebar" className="sidebar">
-      <TitleComponent title='TO DO APPLICATION' color={SIDEBAR_COMPONENT_COLOR}/>
+      <button onClick={HandleOnClick} id='MainButton'>
+        <TitleComponent title='TO DO APPLICATION' color={SIDEBAR_COMPONENT_COLOR}/>
+      </button>
 
       <DividerComponent color={SIDEBAR_COMPONENT_COLOR}/>
       

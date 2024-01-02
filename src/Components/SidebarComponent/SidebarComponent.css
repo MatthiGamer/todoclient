@@ -9,4 +9,11 @@
     padding: var(--padding);
     box-sizing: border-box;
 }
+
+#MainButton {
+    height: 100px;
+    margin-top: -2px;
+    border-color: transparent;
+    background-color: transparent;
+}
   
