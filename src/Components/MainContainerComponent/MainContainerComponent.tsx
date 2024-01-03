@@ -5,6 +5,7 @@ import { SECONDARY_COLOR } from "../../Colors";
 import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
 import ListItemComponent from "../ListItemComponent/ListItemComponent";
 import { ListItemType } from "../../ListItemType";
+import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -17,9 +18,12 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         <>
             <TitleComponent title={props.listName} color={SECONDARY_COLOR}/>
             <DividerComponent color={SECONDARY_COLOR}/>
-            {props.listItems?.map( item => {
-                <ListItemComponent title={item.listItemName} isImportant={item.listItemIsImportant}/>
-            })}
+
+            {props.listItems === undefined ? <EmptyListComponent/> :
+                props.listItems?.map( item => {
+                    <ListItemComponent title={item.listItemName} isImportant={item.listItemIsImportant}/>
+                })
+            }
         </>
     )
 };

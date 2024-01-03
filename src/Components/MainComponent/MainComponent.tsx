@@ -8,9 +8,11 @@ const MainComponent: React.FC = () => {
   const [listName, setListName] = useState<string>("")
 
   return (
-    <div className="main-container">
-      <SidebarComponent setListName={setListName}/>
-      <div className="main-content">
+    <div id="MainContainer">
+      <div>
+        <SidebarComponent setListName={setListName}/>
+      </div>
+      <div id="ListView" style={listName === "" ? {display: "flex"} : {}}>
         <MainContainerComponent listName={listName}/>
       </div>
     </div>

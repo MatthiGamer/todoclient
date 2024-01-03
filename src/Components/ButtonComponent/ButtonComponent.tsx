@@ -3,6 +3,7 @@ import "./ButtonComponent.css";
 
 interface ButtonComponentProps{
     title: string;
+    id?: string;
     color?: string;
     OnClick?: () => void;
 }
@@ -10,7 +11,7 @@ interface ButtonComponentProps{
 const ButtonComponent: React.FC<ButtonComponentProps> = (props) => {
 
     return (
-        <button style={{borderColor: props.color, color: props.color}} onClick={props.OnClick}>{props.title}</button>
+        <button id={props.id} style={{borderColor: props.color, color: props.color}} onClick={props.OnClick}>{props.title}</button>
     )
 }
 
