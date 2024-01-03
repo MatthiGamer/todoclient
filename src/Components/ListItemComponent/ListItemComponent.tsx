@@ -4,13 +4,14 @@ import "./ListItemComponent.css";
 
 interface ListItemComponentProps{
     title: string;
+    isImportant: boolean;
     color?: string;
-    method?: () => void;
+    //method?: () => void; // =>  Open Info Panel
 }
 
 const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
-    const [isImportant, setIsImportant] = useState<boolean>(false);
+    const [isImportant, setIsImportant] = useState<boolean>(props.isImportant);
 
     const HandleOnClickStar = () => {
         setIsImportant(!isImportant);
