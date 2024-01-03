@@ -3,10 +3,11 @@ import TitleComponent from "../TitleComponent/TitleComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
 import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
+import ListItemComponent from "../ListItemComponent/ListItemComponent";
 
 interface MainContainerComponentProps{
     listName: string;
-    // List of all items
+    listItems?: {itemName: string}[];
 }
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
@@ -15,6 +16,9 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         <>
             <TitleComponent title={props.listName} color={SECONDARY_COLOR}/>
             <DividerComponent color={SECONDARY_COLOR}/>
+            {props.listItems?.map( item => {
+                <ListItemComponent title={item.itemName}/>
+            })}
         </>
     )
 };
