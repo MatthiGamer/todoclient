@@ -12,9 +12,11 @@ interface SidebarComponentProps{
 const SIDEBAR_COMPONENT_COLOR: string = PRIMARY_COLOR;
 
 const primaryLists = [
-  {name: 'Today'},
-  {name: 'Important'},
-  {name: 'Optional'},
+  {name: 'Today'},      // All tasks due to today [filled automatically]
+  {name: 'Important'},  // All tasks marked as important [filled automatically]
+  {name: 'Tasks'},      // All tasks [filled automatically]
+  {name: 'Todo'},       // All tasks that have to be done today [filled by user]
+  {name: 'Optional'},   // All tasks that could be done today [filled by user]
 ];
 
 const userLists = [
