@@ -1,5 +1,4 @@
 import React from "react";
-import "./EmptyMainContainerComponent.css"
 import CustomEmptyComponent from "../EmptyCustomComponent/CustomEmptyComponent";
 
 const EmptyMainContainerComponent: React.FC = () => {

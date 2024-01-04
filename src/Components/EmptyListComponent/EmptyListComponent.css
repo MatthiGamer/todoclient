@@ -1,15 +1,3 @@
-#EmptyListContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#EmptyListContent > * {
-    margin: 2px;
-    color: var(--secondary-color)
-}
-
 #AddButton {
     width: fit-content;
 }

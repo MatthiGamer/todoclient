@@ -8,4 +8,5 @@
 
 #EmptyMainContent > * {
     margin: 2px;
+    color: var(--secondary-color)
 }

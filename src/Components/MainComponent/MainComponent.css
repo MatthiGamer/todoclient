@@ -3,7 +3,7 @@
   margin: 0;
   height: 100vh;
   background-color: var(--primary-color);
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 7fr 13fr;
 }
   
 #ListView {
