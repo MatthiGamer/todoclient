@@ -13,6 +13,7 @@ const MainComponent: React.FC = () => {
     <div id="MainContainer">
       <div>
         <SidebarComponent setListName={setListName}/>
+        {/* TODO: Move to its own component */}
         <CustomDialogComponent header='Where should the task be added?' isVisible={true}>
           <ButtonComponent title={'Add to Todo'} color='black'></ButtonComponent>
           <ButtonComponent title={'Add to Optional'} color='black'></ButtonComponent>
