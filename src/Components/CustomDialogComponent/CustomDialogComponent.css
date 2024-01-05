@@ -1,0 +1,19 @@
+#Overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000066;
+}
+
+#Dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); /* Relative to width */
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    width: fit-content;
+    padding: 10px 10px;
+}
