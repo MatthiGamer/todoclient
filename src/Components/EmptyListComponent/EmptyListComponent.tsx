@@ -17,7 +17,7 @@ const EmptyListComponent: React.FC<EmptyListComponentProps> = (props) => {
 
     return(
         <CustomEmptyComponent>
-            <h1>It's empty here...</h1>
+            <h1>It"s empty here...</h1>
             <ButtonComponent title="Click here to add a task" color={SECONDARY_COLOR} id="AddButton" OnClick={HandleOnClick}/>
             <p>or add one as usual down there ↓.</p>
         </CustomEmptyComponent>

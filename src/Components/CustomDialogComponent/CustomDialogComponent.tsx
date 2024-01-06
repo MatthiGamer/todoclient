@@ -17,7 +17,7 @@ const CustomDialogComponent: React.FC<PropsWithChildren<CustomDialogComponentPro
             <div id="Dialog">
                 <h2>{props.header}</h2>
                 {props.children}
-                <ButtonComponent title={'Cancel'} color='black' OnClick={HandleOnCancel}></ButtonComponent>
+                <ButtonComponent title={"Cancel"} color="black" OnClick={HandleOnCancel}></ButtonComponent>
             </div>
         </div>
     )

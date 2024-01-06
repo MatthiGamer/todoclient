@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import SidebarComponent from '../SidebarComponent/SidebarComponent';
-import './MainComponent.css';
-import MainContainerComponent from '../MainContainerComponent/MainContainerComponent';
-import CustomDialogComponent from '../CustomDialogComponent/CustomDialogComponent';
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import React, { useState } from "react";
+import SidebarComponent from "../SidebarComponent/SidebarComponent";
+import "./MainComponent.css";
+import MainContainerComponent from "../MainContainerComponent/MainContainerComponent";
 
 const MainComponent: React.FC = () => {
 
