@@ -17,3 +17,7 @@
     width: fit-content;
     padding: 10px 10px;
 }
+
+#DialogHeading {
+    text-align: center;
+}
