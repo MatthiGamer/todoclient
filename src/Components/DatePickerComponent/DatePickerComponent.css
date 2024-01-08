@@ -1,0 +1,16 @@
+#DatePickerContainer {
+    display: flex;
+    justify-content: center;
+    height: 25px;
+    width: calc(100% - 5px);
+    border: 2px var(--secondary-color) solid;
+    border-radius: var(--border-radius);
+}
+
+#DateInput {
+    width: fit-content;
+    outline: none;
+    border-style: none;
+    font-size: large;
+    background-color: var(--primary-color);
+}
