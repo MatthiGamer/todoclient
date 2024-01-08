@@ -7,6 +7,8 @@ import ListItemComponent from "../ListItemComponent/ListItemComponent";
 import { ListItemType } from "../../ListItemType";
 import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
 import "./MainContainerComponent.css";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import {CalendarDateAppointmentTime} from "react-basicons";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -43,6 +45,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
             <div id="InputBorder">
                 <input type="text" placeholder="New Task" id="NewTaskInput" onKeyDown={HandleOnEnterKeyPress} ref={inputReference}/>
+                <ButtonComponent title={"Kalender"}/>
             </div>
         </>
     )

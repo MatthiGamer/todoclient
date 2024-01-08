@@ -1,5 +1,6 @@
 #InputBorder {
     display: flex;
+    flex-direction: row;
     align-items: center;
     height: 36px;
     border: 2px solid var(--secondary-color);
@@ -11,6 +12,7 @@
     width: 100%;
     padding-left: 10px;
     border-style: none;
+    border: 2px red solid;
     border-radius: var(--border-radius);
     color: var(--secondary-color);
     background-color: var(--primary-color);
