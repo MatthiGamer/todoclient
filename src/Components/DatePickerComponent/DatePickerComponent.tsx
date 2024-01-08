@@ -1,9 +1,17 @@
-import React, { useRef } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import "./DatePickerComponent.css";
 
-const DatePickerComponent: React.FC = () => {
+interface DatePickerComponentProps {
+    OnChange: (date: Date | null) => void;
+}
+
+const DatePickerComponent: React.FC<DatePickerComponentProps> = (props) => {
 
     const dateInputRef = useRef<HTMLInputElement>(null)
+
+    const HandleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+        props.OnChange(event.target.valueAsDate);
+    }
 
     const MinDateString = (): string => {
         const date = new Date();
@@ -17,7 +25,7 @@ const DatePickerComponent: React.FC = () => {
 
     return (
         <div id="DatePickerContainer">
-            <input id="DateInput" type="date" lang="en" min={today} ref={dateInputRef}/>
+            <input id="DateInput" type="date" min={today} ref={dateInputRef} onChange={HandleOnChange}/>
         </div>
     )
 }
