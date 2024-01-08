@@ -5,8 +5,8 @@ button{
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-color);
     background-color: transparent;
-    border: 1px var(--text-color) solid;
-    border-radius: 10px;
+    border: 2px var(--text-color) solid;
+    border-radius: var(--border-radius);
     margin-top: 5px;
     cursor: pointer;
 }

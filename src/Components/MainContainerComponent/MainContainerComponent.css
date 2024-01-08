@@ -1,0 +1,22 @@
+#InputBorder {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+#NewTaskInput {
+    height: 30px;
+    width: 100%;
+    padding-left: 10px;
+    border-style: none;
+    border-radius: var(--border-radius);
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    font-size: large;
+}
+
+#NewTaskInput:focus{
+    outline: none; /* No outline when focused */
+}

@@ -6,6 +6,7 @@ import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMai
 import ListItemComponent from "../ListItemComponent/ListItemComponent";
 import { ListItemType } from "../../ListItemType";
 import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
+import "./MainContainerComponent.css";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -24,6 +25,10 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
                     <ListItemComponent title={item.listItemName} isImportant={item.listItemIsImportant}/>
                 })
             }
+
+            <div id="InputBorder">
+                <input type="text" placeholder="New Task" id="NewTaskInput"/>
+            </div>
         </>
     )
 };
