@@ -4,6 +4,8 @@
     left: 0;
     height: 100%;
     width: 35%;
+    display: flex;
+    flex-direction: column;
     background-color: var(--secondary-color);
     color: var(--text-color);
     padding: var(--padding);
@@ -14,5 +16,9 @@
     height: 87px;
     border-color: transparent;
     background-color: transparent;
+}
+
+#AddListButton {
+    margin-top: auto;
 }
   
