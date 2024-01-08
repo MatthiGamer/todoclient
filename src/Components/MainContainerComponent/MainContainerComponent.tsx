@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
@@ -9,6 +9,7 @@ import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
 import "./MainContainerComponent.css";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import {CalendarDateAppointmentTime} from "react-basicons";
+import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogComponent";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -16,6 +17,8 @@ interface MainContainerComponentProps{
 }
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
+
+    const [isDateDialogVisible, setDateDialogVisibility] = useState<boolean>(false);
 
     const inputReference = useRef<HTMLInputElement>(null);
 
@@ -31,6 +34,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
     const HandleOnDate = () => {
         // Open SetDueDateDialog
+        setDateDialogVisibility(true);
     }
 
     AutoFocusAddInput();
@@ -49,8 +53,10 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
             <div id="InputBorder">
                 <input type="text" placeholder="New Task" id="NewTaskInput" onKeyDown={HandleOnEnterKeyPress} ref={inputReference}/>
-                <ButtonComponent title={<CalendarDateAppointmentTime size={30} color={SECONDARY_COLOR}/>} id="SetDueDateButton"/>
+                <ButtonComponent title={<CalendarDateAppointmentTime size={30} color={SECONDARY_COLOR}/>} id="SetDueDateButton" OnClick={HandleOnDate}/>
             </div>
+
+            <DueDateDialogComponent isVisible={isDateDialogVisible} setVisibility={setDateDialogVisibility}/>
         </>
     )
 };
