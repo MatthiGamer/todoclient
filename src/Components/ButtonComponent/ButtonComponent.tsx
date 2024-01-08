@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import "./ButtonComponent.css";
 
 interface ButtonComponentProps{
-    title: string;
+    title: ReactNode | string;
     id?: string;
     color?: string;
     OnClick?: () => void;

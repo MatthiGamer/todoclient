@@ -27,7 +27,11 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
     const HandleOnEnterKeyPress = (event: { key: string; }) => {
         if (event.key !== "Enter") return;
         // Add new task
-      };
+    };
+
+    const HandleOnDate = () => {
+        // Open SetDueDateDialog
+    }
 
     AutoFocusAddInput();
 
@@ -45,7 +49,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
             <div id="InputBorder">
                 <input type="text" placeholder="New Task" id="NewTaskInput" onKeyDown={HandleOnEnterKeyPress} ref={inputReference}/>
-                <ButtonComponent title={"Kalender"}/>
+                <ButtonComponent title={<CalendarDateAppointmentTime size={30} color={SECONDARY_COLOR}/>} id="SetDueDateButton"/>
             </div>
         </>
     )
