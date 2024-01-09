@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CustomDialogComponent from "../CustomDialogComponent/CustomDialogComponent";
 import { SECONDARY_COLOR } from "../../Colors";
 import DatePickerComponent from "../DatePickerComponent/DatePickerComponent";
+import { TaskManager } from "../../Classes/TaskManager";
 
 interface DueDateDialogComponentProps {
     isVisible: boolean;
@@ -22,8 +23,11 @@ const DueDateDialogComponent: React.FC<DueDateDialogComponentProps> = (props) =>
     const HandleOnSet = () => {
         if (!props.setVisibility) return;
 
-        // Set Due Date for task
-
+        const dateString: string | undefined = selectedDate?.toISOString();
+        if (dateString !== undefined){
+            TaskManager.getInstance().SetDueDate(dateString);
+        }
+        
         props.setVisibility(false);
     }
 

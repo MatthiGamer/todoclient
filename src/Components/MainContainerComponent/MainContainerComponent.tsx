@@ -4,12 +4,13 @@ import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
 import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
 import ListItemComponent from "../ListItemComponent/ListItemComponent";
-import { ListItemType } from "../../ListItemType";
+import { ListItemType } from "../../Types/ListItemType";
 import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
 import "./MainContainerComponent.css";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import {CalendarDateAppointmentTime} from "react-basicons";
 import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogComponent";
+import { TaskManager } from "../../Classes/TaskManager";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -29,11 +30,11 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
     const HandleOnEnterKeyPress = (event: { key: string; }) => {
         if (event.key !== "Enter") return;
-        // Add new task
+        if (!inputReference.current) return;
+        TaskManager.getInstance().CreateTask(inputReference.current.value);
     };
 
     const HandleOnDate = () => {
-        // Open SetDueDateDialog
         setDateDialogVisibility(true);
     }
 

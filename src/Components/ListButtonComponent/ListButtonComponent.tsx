@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import { TaskManager } from "../../Classes/TaskManager";
 
 interface ListButtonComponentProps{
     title: string;
@@ -12,6 +13,7 @@ const ListButtonComponent: React.FC<ListButtonComponentProps> = (props) => {
     const HandleOnClick = () => {
         if (props.setListName == undefined) return;
         props.setListName(props.title);
+        TaskManager.getInstance().SetCurrentList(props.title);
     }
 
     return(

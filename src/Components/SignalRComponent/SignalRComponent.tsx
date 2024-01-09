@@ -1,9 +1,17 @@
-import React, { useEffect } from "react";
-import { HubConnectionBuilder, LogLevel, HttpTransportType } from "@microsoft/signalr";
+import { useEffect } from "react";
+import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection } from "@microsoft/signalr";
+import { Task } from "../../Types/TaskType";
 
-const SignalRComponent = () => {
+var connection: HubConnection;
+
+export const SendTask = (task: Task) => {
+    connection.invoke("ReceiveTask", task.taskName, task.taskList, task.dueDateString);
+}
+
+export const SignalRComponent = () => {
+
     useEffect(() => {
-        const connection = new HubConnectionBuilder()
+        connection = new HubConnectionBuilder()
             .withUrl("http://localhost:5000/Tasks", { skipNegotiation: true, transport: HttpTransportType.WebSockets })
             .configureLogging(LogLevel.Information)
             .withStatefulReconnect()
