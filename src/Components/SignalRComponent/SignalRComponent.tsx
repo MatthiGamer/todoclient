@@ -22,9 +22,6 @@ export const SignalRComponent = () => {
         connection.start()
             .then(() => {
                 console.log("Connection started!");
-                
-                // Call the SendInitialMessage method on the server
-                connection.invoke("SendInitialMessage", "Hello from React!");
             })
             .catch(err => console.error("Error while establishing connection:", err));
 
