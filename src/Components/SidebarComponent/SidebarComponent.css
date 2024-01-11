@@ -12,12 +12,6 @@
     box-sizing: border-box;
 }
 
-#MainButton {
-    height: 87px;
-    border-color: transparent;
-    background-color: transparent;
-}
-
 #AddListButton {
     margin-top: auto;
 }

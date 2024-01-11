@@ -43,9 +43,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
   // Styled Components?
   return (
     <div id="sidebar" className="sidebar">
-      <button onClick={HandleOnClick} id="MainButton">
-        <TitleComponent title="TO DO APPLICATION" color={SIDEBAR_COMPONENT_COLOR}/>
-      </button>
+      <TitleComponent title="TO DO APPLICATION" color={SIDEBAR_COMPONENT_COLOR} OnClick={HandleOnClick}/>
 
       <DividerComponent color={SIDEBAR_COMPONENT_COLOR}/>
       
