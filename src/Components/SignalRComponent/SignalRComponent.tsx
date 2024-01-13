@@ -6,7 +6,7 @@ var connection: HubConnection;
 
 export const SendTask = (task: Task) => {
     if (connection.state !== HubConnectionState.Connected) {
-        console.log("ConnectionError: Cannot send data if the connection is not in the 'Connected' State.");
+        console.error("ConnectionError: Cannot send data if the connection is not in the 'Connected' State.\nStart the server and refresh this site to connect.");
         return; // Add Buffer Queue
     }
 
