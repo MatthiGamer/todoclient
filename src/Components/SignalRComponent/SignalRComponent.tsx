@@ -1,11 +1,17 @@
 import { useEffect } from "react";
-import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection } from "@microsoft/signalr";
+import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { Task } from "../../Types/TaskType";
 
 var connection: HubConnection;
 
 export const SendTask = (task: Task) => {
-    connection.invoke("ReceiveTask", task.taskName, task.taskList, task.dueDateString);
+    if (connection.state !== HubConnectionState.Connected) {
+        console.log("ConnectionError: Cannot send data if the connection is not in the 'Connected' State.");
+        return; // Add Buffer Queue
+    }
+
+    connection.invoke("ReceiveTask", task.taskName, task.taskList, task.dueDateString)
+    .catch(err => console.error("ConnectionError: ", err));
 }
 
 export const SignalRComponent = () => {
