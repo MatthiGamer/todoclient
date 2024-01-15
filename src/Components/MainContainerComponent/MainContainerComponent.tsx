@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
@@ -23,6 +23,16 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
     const inputReference = useRef<HTMLInputElement>(null);
 
+    const ResetInput = () => {
+        if (!inputReference.current) return;
+        inputReference.current.value = "";
+        AutoFocusAddInput();
+    }
+
+    useEffect(() => {
+        ResetInput();
+    }, [props.listName]);
+
     const AutoFocusAddInput = () => {
         if (!inputReference.current) return;
         inputReference.current.focus();
@@ -32,6 +42,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         if (event.key !== "Enter") return;
         if (!inputReference.current) return;
         TaskManager.getInstance().CreateTask(inputReference.current.value);
+        ResetInput();
     };
 
     const HandleOnDate = () => {
