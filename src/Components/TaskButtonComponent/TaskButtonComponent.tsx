@@ -1,9 +1,20 @@
 import React from "react";
+import { Task } from "../../Types/TaskType";
 
-const TaskButtonComponent: React.FC = () => {
+interface TaskButtonComponentProps {
+    task: Task;
+}
+
+const TaskButtonComponent: React.FC<TaskButtonComponentProps> = (props) => {
+
+    const HandleOnClick = () => {
+        // Open Sidebar
+    }
+
     return (
-        <>
-        </>
+        <div onClick={HandleOnClick}>
+            <p>{props.task.taskName}</p>
+        </div>
     )
 }
 
