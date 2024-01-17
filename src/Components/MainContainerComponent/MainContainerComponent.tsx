@@ -4,17 +4,18 @@ import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
 import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
 import ListItemComponent from "../ListItemComponent/ListItemComponent";
-import { ListItemType } from "../../Types/ListItemType";
 import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
 import "./MainContainerComponent.css";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import {CalendarDateAppointmentTime} from "react-basicons";
 import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogComponent";
 import { TaskManager } from "../../Classes/TaskManager";
+import { Task } from "../../Types/TaskType";
+import TaskButtonComponent from "../TaskButtonComponent/TaskButtonComponent";
 
 interface MainContainerComponentProps{
     listName: string;
-    listItems?: ListItemType[];
+    listItems?: Task[];
 }
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
@@ -59,7 +60,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
             {props.listItems === undefined ? <EmptyListComponent/> :
                 props.listItems?.map( item => {
-                    <ListItemComponent title={item.listItemName} isImportant={item.listItemIsImportant}/>
+                    <TaskButtonComponent task={item}/>
                 })
             }
 

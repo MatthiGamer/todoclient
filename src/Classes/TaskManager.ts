@@ -32,7 +32,7 @@ export class TaskManager {
         if (!this.currentList) return;
         const task: Task = {taskName: taskName, taskList: this.currentList, dueDateString: this.dueDateString, isImportant: this.currentList === LIST_NAME_IMPORTANT};
         this.AddTask(task);
-        //SendTask(task);
+        // SendTask(task); // Comment out for debug
     }
 
     private AddTask = (task: Task) => {
