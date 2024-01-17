@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import "./ListItemComponent.css";
+import { Task } from "../../Types/TaskType";
 
 interface ListItemComponentProps{
-    title: string;
-    isImportant: boolean;
+    task: Task;
     color?: string;
     //method?: () => void; // =>  Open Info Panel
 }
 
 const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
-    const [isImportant, setIsImportant] = useState<boolean>(props.isImportant);
+    const [isImportant, setIsImportant] = useState<boolean>(props.task.isImportant);
 
     const HandleOnClickStar = () => {
         setIsImportant(!isImportant);
@@ -23,7 +23,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
     return(
         <div id="ListItemContainer">
-            <ButtonComponent title={props.title} color={props.color} OnClick={HandleOnClick}/>
+            <ButtonComponent title={props.task.taskName} color={props.color} OnClick={HandleOnClick}/>
             <button
                 id="favStar"
                 style={{borderColor: props.color, color: props.color}}
