@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
 import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
-import ListItemComponent from "../ListItemComponent/ListItemComponent";
 import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
 import "./MainContainerComponent.css";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
@@ -11,14 +10,15 @@ import {CalendarDateAppointmentTime} from "react-basicons";
 import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogComponent";
 import { TaskManager } from "../../Classes/TaskManager";
 import { Task } from "../../Types/TaskType";
-import TaskButtonComponent from "../TaskButtonComponent/TaskButtonComponent";
+import ListItemComponent from "../ListItemComponent/ListItemComponent";
 
 interface MainContainerComponentProps{
     listName: string;
-    listItems?: Task[];
 }
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
+
+    const [taskList, setTaskList] = useState<Task[] | undefined>(TaskManager.GetInstance().GetTasks());
 
     const [isDateDialogVisible, setDateDialogVisibility] = useState<boolean>(false);
 
@@ -30,8 +30,17 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         AutoFocusAddInput();
     }
 
-    useEffect(() => {
+    const UpdateTasks = () => {
+        setTaskList(TaskManager.GetInstance().GetTasks());
+    }
+
+    const UpdateAll = () => {
         ResetInput();
+        UpdateTasks();
+    }
+
+    useEffect(() => {
+        UpdateAll();
     }, [props.listName]);
 
     const AutoFocusAddInput = () => {
@@ -42,8 +51,8 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
     const HandleOnEnterKeyPress = (event: { key: string; }) => {
         if (event.key !== "Enter") return;
         if (!inputReference.current) return;
-        TaskManager.getInstance().CreateTask(inputReference.current.value);
-        ResetInput();
+        TaskManager.GetInstance().CreateTask(inputReference.current.value);
+        UpdateAll();
     };
 
     const HandleOnDate = () => {
@@ -58,11 +67,13 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
             <TitleComponent title={props.listName} color={SECONDARY_COLOR}/>
             <DividerComponent color={SECONDARY_COLOR}/>
 
-            {props.listItems === undefined ? <EmptyListComponent/> :
-                props.listItems?.map( item => {
-                    <TaskButtonComponent task={item}/>
-                })
-            }
+            <div>
+                {taskList === undefined ? <EmptyListComponent/> :
+                    taskList.map( (item: Task) => {
+                        return <ListItemComponent task={item} color={SECONDARY_COLOR} />
+                    })
+                }
+            </div>
 
             <div id="InputBorder">
                 <input type="text" placeholder="New Task" id="NewTaskInput" onKeyDown={HandleOnEnterKeyPress} ref={inputReference}/>

@@ -25,7 +25,7 @@ const DueDateDialogComponent: React.FC<DueDateDialogComponentProps> = (props) =>
 
         const dateString: string | undefined = selectedDate?.toISOString();
         if (dateString !== undefined){
-            TaskManager.getInstance().SetDueDate(dateString);
+            TaskManager.GetInstance().SetDueDate(dateString);
         }
         
         props.setVisibility(false);

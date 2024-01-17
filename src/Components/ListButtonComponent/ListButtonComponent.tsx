@@ -13,7 +13,7 @@ const ListButtonComponent: React.FC<ListButtonComponentProps> = (props) => {
     const HandleOnClick = () => {
         if (props.setListName == undefined) return;
         props.setListName(props.title);
-        TaskManager.getInstance().SetCurrentList(props.title);
+        TaskManager.GetInstance().SetCurrentList(props.title);
     }
 
     return(

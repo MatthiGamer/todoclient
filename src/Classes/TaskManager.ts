@@ -12,7 +12,7 @@ export class TaskManager {
     
     private constructor() {}
 
-    public static getInstance(): TaskManager {
+    public static GetInstance(): TaskManager {
         if (!TaskManager.instance) {
             TaskManager.instance = new TaskManager();
         }
@@ -28,11 +28,22 @@ export class TaskManager {
         this.dueDateString = dueDateString;
     }
 
+    public GetTasks = (): Task[] | undefined => {
+        if (this.tasks === null ||
+            this.currentList === null ||
+            this.tasks[this.currentList] === undefined) {
+            return undefined;
+        }
+
+        return this.tasks[this.currentList];
+    }
+
     public CreateTask = (taskName: string) => {
         if (!this.currentList) return;
         const task: Task = {taskName: taskName, taskList: this.currentList, dueDateString: this.dueDateString, isImportant: this.currentList === LIST_NAME_IMPORTANT};
         this.AddTask(task);
         // SendTask(task); // Comment out for debug
+        console.log("Task added.");
     }
 
     private AddTask = (task: Task) => {
@@ -45,7 +56,5 @@ export class TaskManager {
         }
 
         this.tasks[task.taskList] = [...this.tasks[task.taskList], task];
-        console.log("Task added.");
-        console.log(this.tasks[task.taskList]);
     }
 }
