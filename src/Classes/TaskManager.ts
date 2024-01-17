@@ -1,4 +1,5 @@
 import { SendTask } from "../Components/SignalRComponent/SignalRComponent";
+import { LIST_NAME_IMPORTANT } from "../Consts";
 import { Task } from "../Types/TaskType";
 
 export class TaskManager {
@@ -29,7 +30,7 @@ export class TaskManager {
 
     public CreateTask = (taskName: string) => {
         if (!this.currentList) return;
-        const task: Task = {taskName: taskName, taskList: this.currentList, dueDateString: this.dueDateString};
+        const task: Task = {taskName: taskName, taskList: this.currentList, dueDateString: this.dueDateString, isImportant: this.currentList === LIST_NAME_IMPORTANT};
         this.AddTask(task);
         //SendTask(task);
     }
