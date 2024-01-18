@@ -20,8 +20,11 @@ export class TaskManager {
         return TaskManager.instance;
     }
 
-    public SetTaskImportance = (task: Task, isImportant: boolean) => {
-
+    public SetTaskImportance = (taskID: string, isImportant: boolean) => {
+        const task = this.GetTaskByID(taskID);
+        if (task === undefined) return;
+        
+        task.isImportant = isImportant;
     }
 
     public SetCurrentList = (listName: string | null) => {
@@ -66,6 +69,17 @@ export class TaskManager {
     private GetTodayDateString = (): string => {
         const date: Date = new Date();
         return date.toISOString();
+    }
+
+    private GetTaskByID = (taskID: string): Task | undefined => {
+        if (this.tasks === null) return;
+        if (this.currentList === null) return;
+        if (this.tasks[this.currentList] === undefined) return;
+
+        const tasks: Task[] = this.tasks[this.currentList];
+        const foundTask = tasks.find((task: Task) => task.taskID === taskID);
+
+        return foundTask;
     }
 
     private AddTask = (task: Task) => {
