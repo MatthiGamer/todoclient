@@ -67,13 +67,13 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
             <TitleComponent title={props.listName} color={SECONDARY_COLOR}/>
             <DividerComponent color={SECONDARY_COLOR}/>
 
-            <div>
                 {taskList === undefined ? <EmptyListComponent/> :
-                    taskList.map( (item: Task) => {
-                        return <ListItemComponent task={item} color={SECONDARY_COLOR} />
-                    })
+                    <div>
+                        {taskList.map( (item: Task) => {
+                            return <ListItemComponent task={item} color={SECONDARY_COLOR} />
+                        })}
+                    </div>
                 }
-            </div>
 
             <div id="InputBorder">
                 <input type="text" placeholder="New Task" id="NewTaskInput" onKeyDown={HandleOnEnterKeyPress} ref={inputReference}/>
