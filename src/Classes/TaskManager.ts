@@ -1,5 +1,5 @@
 import { SendTask } from "../Components/SignalRComponent/SignalRComponent";
-import { LIST_NAME_IMPORTANT } from "../Consts";
+import { LIST_NAME_IMPORTANT, LIST_NAME_TODAY } from "../Consts";
 import { Task } from "../Types/TaskType";
 
 export class TaskManager {
@@ -40,10 +40,19 @@ export class TaskManager {
 
     public CreateTask = (taskName: string) => {
         if (!this.currentList) return;
-        const task: Task = {taskName: taskName, taskList: this.currentList, dueDateString: this.dueDateString, isImportant: this.currentList === LIST_NAME_IMPORTANT};
+        const task: Task = {
+            taskName: taskName,
+            taskList: this.currentList,
+            dueDateString: this.currentList === LIST_NAME_TODAY ? this.GetTodayDateString() : this.dueDateString,
+            isImportant: this.currentList === LIST_NAME_IMPORTANT};
         this.AddTask(task);
         // SendTask(task); // Comment out for debug
         console.log("Task added.");
+    }
+
+    private GetTodayDateString = (): string => {
+        const date: Date = new Date();
+        return date.toISOString();
     }
 
     private AddTask = (task: Task) => {
