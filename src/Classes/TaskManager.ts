@@ -40,11 +40,14 @@ export class TaskManager {
 
     public CreateTask = (taskName: string) => {
         if (!this.currentList) return;
+
         const task: Task = {
             taskName: taskName,
             taskList: this.currentList,
             dueDateString: this.currentList === LIST_NAME_TODAY ? this.GetTodayDateString() : this.dueDateString,
-            isImportant: this.currentList === LIST_NAME_IMPORTANT};
+            isImportant: this.currentList === LIST_NAME_IMPORTANT
+        };
+
         this.AddTask(task);
         // SendTask(task); // Comment out for debug
         console.log("Task added.");
@@ -52,6 +55,9 @@ export class TaskManager {
 
     private GetTodayDateString = (): string => {
         const date: Date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
         return date.toISOString();
     }
 
