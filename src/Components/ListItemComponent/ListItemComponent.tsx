@@ -6,6 +6,7 @@ import { TaskManager } from "../../Classes/TaskManager";
 
 interface ListItemComponentProps{
     key: string;
+    id: string;
     task: Task;
     color?: string;
     //method?: () => void; // =>  Open Info Panel
@@ -18,7 +19,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
     // Update local state when taskList changes
     useEffect(() => {
         setIsImportant(props.task.isImportant);
-    }, [props.key]);
+    }, [props.id]);
 
     const HandleOnClickStar = () => {
         const newIsImportant: boolean = !isImportant;

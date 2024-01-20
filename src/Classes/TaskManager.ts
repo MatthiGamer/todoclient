@@ -58,7 +58,7 @@ export class TaskManager {
         };
 
         this.AddTask(task);
-        // SendTask(task); // Comment out for debug
+        SendTask(task); // Comment out for debug
         console.log("Task added.");
     }
 
