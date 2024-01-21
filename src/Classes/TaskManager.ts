@@ -54,7 +54,8 @@ export class TaskManager {
             taskName: taskName,
             taskList: this.currentList,
             dueDateString: this.currentList === LIST_NAME_TODAY ? this.GetTodayDateString() : this.dueDateString,
-            isImportant: this.currentList === LIST_NAME_IMPORTANT
+            isImportant: this.currentList === LIST_NAME_IMPORTANT,
+            isDone: false
         };
 
         this.AddTask(task);

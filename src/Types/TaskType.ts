@@ -4,4 +4,5 @@ export type Task = {
     taskList: string;
     dueDateString?: string | null;
     isImportant: boolean;
+    isDone: boolean;
 };

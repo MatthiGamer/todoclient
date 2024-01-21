@@ -10,7 +10,7 @@ export const SendTask = (task: Task) => {
         return; // Add Buffer Queue
     }
 
-    connection.invoke("ReceiveTask", task.taskID, task.taskName, task.taskList, task.dueDateString, task.isImportant)
+    connection.invoke("ReceiveTask", task.taskID, task.taskName, task.taskList, task.dueDateString, task.isImportant, task.isDone)
     .catch(err => console.error("ConnectionError: ", err));
 }
 

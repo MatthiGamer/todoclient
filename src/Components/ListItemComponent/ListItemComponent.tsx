@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import "./ListItemComponent.css";
 import { Task } from "../../Types/TaskType";
