@@ -15,16 +15,24 @@ interface ListItemComponentProps{
 const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
     const [isImportant, setIsImportant] = useState<boolean>(props.task.isImportant);
+    const [isDone, setIsDone] = useState<boolean>(props.task.isDone);
 
     // Update local state when taskList changes
     useEffect(() => {
         setIsImportant(props.task.isImportant);
+        setIsDone(props.task.isDone);
     }, [props.id]);
 
-    const HandleOnClickStar = () => {
+    const HandleOnImportant = () => {
         const newIsImportant: boolean = !isImportant;
         setIsImportant(newIsImportant);
         TaskManager.GetInstance().SetTaskImportance(props.task.taskID, newIsImportant);
+    }
+
+    const HandleOnDone = () => {
+        const newIsDone: boolean = !isDone;
+        setIsDone(newIsDone);
+        TaskManager.GetInstance().SetTaskImportance(props.task.taskID, newIsDone);
     }
 
     const HandleOnClick = () => {
@@ -33,12 +41,25 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
     return(
         <div id="ListItemContainer">
-            <ButtonComponent title={props.task.taskName} color={props.color} OnClick={HandleOnClick}/>
-            <button
-                id="favStar"
-                style={{borderColor: props.color, color: props.color}}
-                onClick={HandleOnClickStar}>{isImportant ? "⭐" : ""}
-            </button>
+            <ButtonComponent
+                title={isDone ? "✔" : ""}
+                class="clickableIcon"
+                color={props.color}
+                OnClick={HandleOnDone}
+            />
+
+            <ButtonComponent
+                title={isDone ? <s>{props.task.taskName}</s> : <b>{props.task.taskName}</b>}
+                color={props.color}
+                OnClick={HandleOnClick}
+            />
+
+            <ButtonComponent
+                title={isImportant ? "⭐" : ""}
+                class="clickableIcon"
+                color={props.color}
+                OnClick={HandleOnImportant}
+            />
         </div>
     )
 }

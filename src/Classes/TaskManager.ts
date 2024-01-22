@@ -27,6 +27,13 @@ export class TaskManager {
         task.isImportant = isImportant;
     }
 
+    public SetTaskDone = (taskID: string, isDone: boolean) => {
+        const task = this.GetTaskByID(taskID);
+        if (task === undefined) return;
+        
+        task.isDone = isDone;
+    }
+
     public SetCurrentList = (listName: string | null) => {
         this.currentList = listName;
         this.SetDueDate(null);

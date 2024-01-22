@@ -3,11 +3,17 @@
     justify-content: space-between;
 }
 
-#ListItemContainer > :nth-child(1) {
+#ListItemContainer * {
     margin-right: 10px;
 }
 
-#favStar{
+#ListItemContainer :last-child {
+    margin-right: 0px;
+}
+
+.clickableIcon {
     height: 40px;
-    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    cursor: pointer;
 }
