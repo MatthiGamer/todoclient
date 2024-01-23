@@ -70,7 +70,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
                 {taskList === undefined ? <EmptyListComponent/> :
                     <div>
                         {taskList.map( (item: Task) => {
-                            return <ListItemComponent task={item} color={SECONDARY_COLOR} key={item.taskID} id={item.taskID}/>
+                            return <ListItemComponent task={item} key={item.taskID} id={item.taskID}/>
                         })}
                     </div>
                 }
