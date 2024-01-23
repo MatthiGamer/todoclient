@@ -6,13 +6,24 @@ interface ButtonComponentProps{
     id?: string;
     class?: string;
     color?: string;
+    backgroundColor?: string;
     OnClick?: () => void;
 }
 
 const ButtonComponent: React.FC<ButtonComponentProps> = (props) => {
 
     return (
-        <button id={props.id} className={props.class} style={{borderColor: props.color, color: props.color}} onClick={props.OnClick}>{props.title}</button>
+        <button
+            id={props.id}
+            className={props.class}
+            style={{
+                color: props.color,
+                borderColor: props.color,
+                backgroundColor: props.backgroundColor ? props.backgroundColor : "transparent"
+            }}
+            onClick={props.OnClick}>
+                {props.title}
+        </button>
     )
 }
 
