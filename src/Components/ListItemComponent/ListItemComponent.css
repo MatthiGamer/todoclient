@@ -16,4 +16,13 @@
     min-width: 40px;
     max-width: 40px;
     cursor: pointer;
+    padding: 0px;
+}
+
+#StarContainer {
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
