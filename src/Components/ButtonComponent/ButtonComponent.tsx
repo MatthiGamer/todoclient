@@ -19,7 +19,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = (props) => {
             style={{
                 color: props.color,
                 borderColor: props.color,
-                backgroundColor: props.backgroundColor ? props.backgroundColor : "transparent"
+                backgroundColor: props.backgroundColor ? props.backgroundColor : undefined
             }}
             onClick={props.OnClick}>
                 {props.title}
