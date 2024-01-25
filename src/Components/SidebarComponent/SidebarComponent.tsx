@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "./SidebarComponent.css";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
@@ -24,7 +24,7 @@ const primaryLists = [
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
 
-  const [userListsList, setUserListsList] = useState<{name: string}[]>([{name: "New List"}]);
+  const [userListsList, setUserListsList] = useState<{name: string}[]>([]);
   const [isDialogVisible, setDialogVisibility] = useState<boolean>(false);
 
   const AddUserList = (listName: string) => {
@@ -56,16 +56,20 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
         />
       ))}
 
-      <DividerComponent color={SIDEBAR_COMPONENT_COLOR}/>
+      {userListsList.length === 0 ? <></> :
+        <>
+          <DividerComponent color={SIDEBAR_COMPONENT_COLOR}/>
 
-      {userListsList.map((list) => (
-        <ListButtonComponent
-          key={list.name}
-          setListName={setListName}
-          title={list.name}
-          color={SIDEBAR_COMPONENT_COLOR}
-        />
-      ))}
+          {userListsList.map((list) => (
+            <ListButtonComponent
+              key={list.name}
+              setListName={setListName}
+              title={list.name}
+              color={SIDEBAR_COMPONENT_COLOR}
+            />
+          ))}
+        </>
+      }
 
       <ButtonComponent title={"Add List"} color={SIDEBAR_COMPONENT_COLOR} id="AddListButton" OnClick={HandleOnAdd}/>
       <AddListDialogComponent isVisible={isDialogVisible} createNewList={AddUserList} setDialogVisibility={setDialogVisibility}/>
