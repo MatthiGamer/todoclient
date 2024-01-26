@@ -53,6 +53,26 @@ export class TaskManager {
         return this.tasks[this.currentList];
     }
 
+    public GetAllTasks = (): Task[] | undefined => {
+        // Get all tasks
+        // return list
+        return undefined;
+    }
+
+    public GetTodayTasks = (): Task[] | undefined => {
+        const allTasks: Task[] | undefined = this.GetAllTasks();
+        // filter for dueDate == today
+        // return list
+        return undefined;
+    }
+
+    public GetImportantTasks = (): Task[] | undefined => {
+        const allTasks: Task[] | undefined = this.GetAllTasks();
+        // filter for isImportant == true
+        // return list
+        return undefined;
+    }
+
     public CreateTask = (taskName: string) => {
         if (!this.currentList) return;
 

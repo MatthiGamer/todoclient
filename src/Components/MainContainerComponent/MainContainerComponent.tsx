@@ -11,6 +11,7 @@ import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogCompo
 import { TaskManager } from "../../Classes/TaskManager";
 import { Task } from "../../Types/TaskType";
 import ListItemComponent from "../ListItemComponent/ListItemComponent";
+import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -18,7 +19,18 @@ interface MainContainerComponentProps{
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
 
-    const [taskList, setTaskList] = useState<Task[] | undefined>(TaskManager.GetInstance().GetTasks());
+    const [taskList, setTaskList] = useState<Task[] | undefined>(() => {
+        switch(props.listName) {
+            case LIST_NAME_TASKS:
+                return TaskManager.GetInstance().GetAllTasks();
+            case LIST_NAME_TODAY:
+                return TaskManager.GetInstance().GetTodayTasks();
+            case LIST_NAME_IMPORTANT:
+                return TaskManager.GetInstance().GetImportantTasks();
+            default:
+                return TaskManager.GetInstance().GetTasks();
+        }
+    });
 
     const [isDateDialogVisible, setDateDialogVisibility] = useState<boolean>(false);
 
