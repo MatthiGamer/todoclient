@@ -43,7 +43,18 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
     }
 
     const UpdateTasks = () => {
-        setTaskList(TaskManager.GetInstance().GetTasks());
+        setTaskList(() => {
+            switch(props.listName) {
+                case LIST_NAME_TASKS:
+                    return TaskManager.GetInstance().GetAllTasks();
+                case LIST_NAME_TODAY:
+                    return TaskManager.GetInstance().GetTodayTasks();
+                case LIST_NAME_IMPORTANT:
+                    return TaskManager.GetInstance().GetImportantTasks();
+                default:
+                    return TaskManager.GetInstance().GetTasks();
+            }
+        });
     }
 
     const UpdateAll = () => {
