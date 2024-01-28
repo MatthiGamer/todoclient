@@ -14,6 +14,17 @@ export const SendTask = (task: Task) => {
     .catch(err => console.error("ConnectionError: ", err));
 }
 
+export const GetTasks = async (): Promise<Task[] | undefined> => {
+    return await connection.invoke<Task[]>("SendTasks")
+        .then((tasks: Task[]) => {
+            return tasks;
+        })
+        .catch(error => {
+            console.error("ConnectionError: ", error);
+            return undefined;
+        });
+}
+
 export const SignalRComponent = () => {
 
     useEffect(() => {
