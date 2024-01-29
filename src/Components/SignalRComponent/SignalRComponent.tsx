@@ -10,12 +10,12 @@ export const SendTask = (task: Task) => {
         return; // Add Buffer Queue
     }
 
-    connection.invoke("ReceiveTask", task.taskID, task.taskName, task.taskList, task.dueDateString, task.isImportant, task.isDone)
+    connection.invoke("SaveTask", task.taskID, task.taskName, task.taskList, task.dueDateString, task.isImportant, task.isDone)
     .catch(err => console.error("ConnectionError: ", err));
 }
 
 export const GetTasks = async (): Promise<Task[] | undefined> => {
-    return await connection.invoke<Task[]>("SendTasks")
+    return await connection.invoke<Task[]>("GetTasks")
         .then((tasks: Task[]) => {
             return tasks;
         })

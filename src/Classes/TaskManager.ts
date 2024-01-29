@@ -9,7 +9,8 @@ export class TaskManager {
     private currentList: string | null = null;
     private dueDateString: string | null = null;
 
-    private tasks: { [key: string]: Task[] } | null = null;
+    private tasksDictionary: { [key: string]: Task[] } | null = null;
+    private tasks: Task[] | null = null;
     
     private constructor() {}
 
@@ -17,6 +18,7 @@ export class TaskManager {
         if (!TaskManager.instance) {
             TaskManager.instance = new TaskManager();
         }
+
         return TaskManager.instance;
     }
 
@@ -44,13 +46,13 @@ export class TaskManager {
     }
 
     public GetTasks = (): Task[] | undefined => {
-        if (this.tasks === null ||
+        if (this.tasksDictionary === null ||
             this.currentList === null ||
-            this.tasks[this.currentList] === undefined) {
+            this.tasksDictionary[this.currentList] === undefined) {
             return undefined;
         }
 
-        return this.tasks[this.currentList];
+        return this.tasksDictionary[this.currentList];
     }
 
     public GetAllTasks = (): Task[] | undefined => {
@@ -86,8 +88,7 @@ export class TaskManager {
         };
 
         this.AddTask(task);
-        SendTask(task); // Comment out for debug
-        console.log("Task added.");
+        SendTask(task);
     }
 
     private GenerateTaskID = (): string => {
@@ -106,25 +107,30 @@ export class TaskManager {
     }
 
     private GetTaskByID = (taskID: string): Task | undefined => {
-        if (this.tasks === null) return;
+        if (this.tasksDictionary === null) return;
         if (this.currentList === null) return;
-        if (this.tasks[this.currentList] === undefined) return;
+        if (this.tasksDictionary[this.currentList] === undefined) return;
 
-        const tasks: Task[] = this.tasks[this.currentList];
+        const tasks: Task[] = this.tasksDictionary[this.currentList];
         const foundTask = tasks.find((task: Task) => task.taskID === taskID);
 
         return foundTask;
     }
 
     private AddTask = (task: Task) => {
+        if (this.tasksDictionary === null) {
+            this.tasksDictionary = {};
+        }
+
         if (this.tasks === null) {
-            this.tasks = {};
+            this.tasks = [];
         }
 
-        if (this.tasks[task.taskList] === undefined){
-            this.tasks[task.taskList] = [];
+        if (this.tasksDictionary[task.taskList] === undefined){
+            this.tasksDictionary[task.taskList] = [];
         }
 
-        this.tasks[task.taskList] = [...this.tasks[task.taskList], task];
+        this.tasks = [...this.tasks, task];
+        this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
     }
 }
