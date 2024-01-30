@@ -1,13 +1,15 @@
 import { SendTask } from "../Components/SignalRComponent/SignalRComponent";
 import { LIST_NAME_IMPORTANT, LIST_NAME_TODAY } from "../Consts";
+import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
 import { SHA256 } from "crypto-js";
+import { GetDateTypeFromDate } from "./Utils";
 
 export class TaskManager {
     private static instance: TaskManager | null = null;
 
     private currentList: string | null = null;
-    private dueDateString: string | null = null;
+    private dueDate: DateType | null | undefined = undefined;
 
     private tasksDictionary: { [key: string]: Task[] } | null = null;
     private tasks: Task[] | null = null;
@@ -20,6 +22,17 @@ export class TaskManager {
         }
 
         return TaskManager.instance;
+    }
+
+    public SetTasks = (tasks: Task[] | undefined) => {
+        if (tasks === undefined) {
+            this.tasks = [];
+            return;
+        }
+
+        console.log("Tasks are defined.");
+        console.log(tasks);
+        this.tasks = tasks;
     }
 
     public SetTaskImportance = (taskID: string, isImportant: boolean) => {
@@ -38,11 +51,11 @@ export class TaskManager {
 
     public SetCurrentList = (listName: string | null) => {
         this.currentList = listName;
-        this.SetDueDate(null);
+        this.SetDueDate(undefined);
     }
 
-    public SetDueDate = (dueDateString: string | null) => {
-        this.dueDateString = dueDateString;
+    public SetDueDate = (dueDate: DateType | undefined) => {
+        this.dueDate = dueDate;
     }
 
     public GetTasks = (): Task[] | undefined => {
@@ -82,7 +95,7 @@ export class TaskManager {
             taskID: this.GenerateTaskID(),
             taskName: taskName,
             taskList: this.currentList,
-            dueDateString: this.currentList === LIST_NAME_TODAY ? this.GetTodayDateString() : this.dueDateString,
+            dueDate: this.currentList === LIST_NAME_TODAY ? this.GetTodayDate() : this.dueDate === undefined ? null : this.dueDate,
             isImportant: this.currentList === LIST_NAME_IMPORTANT,
             isDone: false
         };
@@ -98,12 +111,9 @@ export class TaskManager {
         return hash.toString();
     }
 
-    private GetTodayDateString = (): string => {
+    private GetTodayDate = (): DateType => {
         const date: Date = new Date();
-        date.setHours(0);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        return date.toISOString();
+        return GetDateTypeFromDate(date);
     }
 
     private GetTaskByID = (taskID: string): Task | undefined => {

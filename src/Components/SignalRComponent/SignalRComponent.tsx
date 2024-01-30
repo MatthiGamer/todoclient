@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { Task } from "../../Types/TaskType";
+import { TaskManager } from "../../Classes/TaskManager";
 
 var connection: HubConnection;
 
@@ -10,11 +11,11 @@ export const SendTask = (task: Task) => {
         return; // Add Buffer Queue
     }
 
-    connection.invoke("SaveTask", task.taskID, task.taskName, task.taskList, task.dueDateString, task.isImportant, task.isDone)
+    connection.invoke("SaveTask", task.taskID, task.taskName, task.taskList, task.dueDate, task.isImportant, task.isDone)
     .catch(err => console.error("ConnectionError: ", err));
 }
 
-export const GetTasks = async (): Promise<Task[] | undefined> => {
+const GetTasks = async (): Promise<Task[] | undefined> => {
     return await connection.invoke<Task[]>("GetTasks")
         .then((tasks: Task[]) => {
             return tasks;
@@ -39,6 +40,9 @@ export const SignalRComponent = () => {
         connection.start()
             .then(() => {
                 console.log("Connection started!");
+            })
+            .then(async () => {
+                TaskManager.GetInstance().SetTasks(await GetTasks());
             })
             .catch(err => console.error("Error while establishing connection:", err));
 

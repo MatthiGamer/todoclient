@@ -4,6 +4,7 @@ import CustomDialogComponent from "../CustomDialogComponent/CustomDialogComponen
 import { SECONDARY_COLOR } from "../../Colors";
 import DatePickerComponent from "../DatePickerComponent/DatePickerComponent";
 import { TaskManager } from "../../Classes/TaskManager";
+import { GetDateTypeFromDate } from "../../Classes/Utils";
 
 interface DueDateDialogComponentProps {
     isVisible: boolean;
@@ -25,10 +26,7 @@ const DueDateDialogComponent: React.FC<DueDateDialogComponentProps> = (props) =>
 
         const date: Date | null = selectedDate;
         if (date !== null){
-            date.setHours(0);
-            date.setMinutes(0);
-            date.setSeconds(0);
-            TaskManager.GetInstance().SetDueDate(date.toISOString());
+            TaskManager.GetInstance().SetDueDate(GetDateTypeFromDate(date));
         }
         
         props.setVisibility(false);
