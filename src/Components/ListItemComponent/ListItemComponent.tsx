@@ -37,7 +37,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
     const HandleOnDone = () => {
         const newIsDone: boolean = !isDone;
         setIsDone(newIsDone);
-        TaskManager.GetInstance().SetTaskImportance(props.task.taskID, newIsDone);
+        TaskManager.GetInstance().SetTaskDone(props.task.taskID, newIsDone);
     }
 
     const HandleOnClick = () => {
