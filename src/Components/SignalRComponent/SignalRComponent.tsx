@@ -16,9 +16,10 @@ export const SendTask = (task: Task) => {
 }
 
 const GetTasks = async (): Promise<Task[] | undefined> => {
-    return await connection.invoke<Task[]>("GetTasks")
-        .then((tasks: Task[]) => {
-            return tasks;
+    return await connection.invoke<string>("GetTasks")
+        .then((tasksString: string) => {
+            const tasks: Task[] = JSON.parse(tasksString) as Task[];
+            return tasks.length == 0 ? undefined : tasks;
         })
         .catch(error => {
             console.error("ConnectionError: ", error);
@@ -43,6 +44,7 @@ export const SignalRComponent = () => {
             })
             .then(async () => {
                 TaskManager.GetInstance().SetTasks(await GetTasks());
+                console.log("Tasks synchronized");
             })
             .catch(err => console.error("Error while establishing connection:", err));
 

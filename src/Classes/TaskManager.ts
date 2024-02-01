@@ -30,9 +30,7 @@ export class TaskManager {
             return;
         }
 
-        console.log("Tasks are defined.");
-        console.log(tasks);
-        this.tasks = tasks;
+        tasks.forEach(task => this.AddTask(task));
     }
 
     public SetTaskImportance = (taskID: string, isImportant: boolean) => {
