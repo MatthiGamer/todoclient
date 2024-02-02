@@ -8,6 +8,8 @@ import { GetDateTypeFromDate } from "./Utils";
 export class TaskManager {
     private static instance: TaskManager | null = null;
 
+    public OnUpdate?: () => void;
+
     private currentList: string | null = null;
     private dueDate: DateType | null | undefined = undefined;
 
@@ -22,6 +24,11 @@ export class TaskManager {
         }
 
         return TaskManager.instance;
+    }
+
+    private InvokeOnUpdate = () => {
+        if (!this.OnUpdate) return;
+        this.OnUpdate();
     }
 
     public SetTasks = (tasks: Task[] | undefined) => {
@@ -54,6 +61,12 @@ export class TaskManager {
 
     public SetDueDate = (dueDate: DateType | undefined) => {
         this.dueDate = dueDate;
+    }
+
+    public AddTaskFromServer(task: Task | undefined) {
+        if (task === undefined) return;
+        if (this.GetTaskByID(task.taskID) !== undefined) return;
+        this.AddTask(task);
     }
 
     public GetTasks = (): Task[] | undefined => {
@@ -140,5 +153,6 @@ export class TaskManager {
 
         this.tasks = [...this.tasks, task];
         this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
+        this.InvokeOnUpdate();
     }
 }

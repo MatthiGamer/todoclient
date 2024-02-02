@@ -56,6 +56,11 @@ export const SignalRComponent = () => {
             console.log(`Initial response from ASP.NET: ${responseMessage}`);
         });
 
+        connection.on("AddTask", (taskString: string) => {
+            const task: Task = JSON.parse(taskString) as Task;
+            TaskManager.GetInstance().AddTaskFromServer(task);
+        })
+
         return () => {
             connection.stop();
         };

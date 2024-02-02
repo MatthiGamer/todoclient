@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TitleComponent from "../TitleComponent/TitleComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
 import { SECONDARY_COLOR } from "../../Colors";
@@ -62,6 +62,10 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         UpdateTasks();
     }
 
+    TaskManager.GetInstance().OnUpdate = () => {
+        UpdateAll();
+    }
+
     useEffect(() => {
         UpdateAll();
     }, [props.listName]);
@@ -75,7 +79,6 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         if (event.key !== "Enter") return;
         if (!inputReference.current) return;
         TaskManager.GetInstance().CreateTask(inputReference.current.value);
-        UpdateAll();
     };
 
     const HandleOnDate = () => {
