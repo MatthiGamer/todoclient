@@ -1,14 +1,13 @@
-import { SendTask } from "../Components/SignalRComponent/SignalRComponent";
+import { SaveTaskDone, SaveTaskImportance, SendTask } from "../Components/SignalRComponent/SignalRComponent";
 import { LIST_NAME_IMPORTANT, LIST_NAME_TODAY } from "../Consts";
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
 import { SHA256 } from "crypto-js";
 import { GetDateTypeFromDate } from "./Utils";
+import EventManager, { TASK_ADDED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
 
 export class TaskManager {
     private static instance: TaskManager | null = null;
-
-    public OnUpdate?: () => void;
 
     private currentList: string | null = null;
     private dueDate: DateType | null | undefined = undefined;
@@ -26,11 +25,6 @@ export class TaskManager {
         return TaskManager.instance;
     }
 
-    private InvokeOnUpdate = () => {
-        if (!this.OnUpdate) return;
-        this.OnUpdate();
-    }
-
     public SetTasks = (tasks: Task[] | undefined) => {
         if (tasks === undefined) {
             this.tasks = [];
@@ -40,18 +34,32 @@ export class TaskManager {
         tasks.forEach(task => this.AddTask(task));
     }
 
-    public SetTaskImportance = (taskID: string, isImportant: boolean) => {
+    public UpdateTaskImportance = (taskID: string, isImportant: boolean) => {
         const task = this.GetTaskByID(taskID);
         if (task === undefined) return;
+        if (task.isImportant === isImportant) return;
         
         task.isImportant = isImportant;
+        EventManager.emit(TASK_IMPORTANCY_CHANGED_EVENT, taskID);
+    }
+
+    public SetTaskImportance = (taskID: string, isImportant: boolean) => {
+        this.UpdateTaskImportance(taskID, isImportant);
+        SaveTaskImportance(taskID, isImportant);
+    }
+
+    public UpdateTaskDone = (taskID: string, isDone: boolean) => {
+        const task = this.GetTaskByID(taskID);
+        if (task === undefined) return;
+        if (task.isDone === isDone) return;
+        
+        task.isDone = isDone;
+        EventManager.emit(TASK_DONE_CHANGED_EVENT, taskID);
     }
 
     public SetTaskDone = (taskID: string, isDone: boolean) => {
-        const task = this.GetTaskByID(taskID);
-        if (task === undefined) return;
-        
-        task.isDone = isDone;
+        this.UpdateTaskDone(taskID, isDone);
+        SaveTaskDone(taskID, isDone);
     }
 
     public SetCurrentList = (listName: string | null) => {
@@ -61,12 +69,6 @@ export class TaskManager {
 
     public SetDueDate = (dueDate: DateType | undefined) => {
         this.dueDate = dueDate;
-    }
-
-    public AddTaskFromServer(task: Task | undefined) {
-        if (task === undefined) return;
-        if (this.GetTaskByID(task.taskID) !== undefined) return;
-        this.AddTask(task);
     }
 
     public GetTasks = (): Task[] | undefined => {
@@ -138,6 +140,12 @@ export class TaskManager {
         return foundTask;
     }
 
+    public AddTaskFromServer(task: Task | undefined) {
+        if (task === undefined) return;
+        if (this.GetTaskByID(task.taskID) !== undefined) return;
+        this.AddTask(task);
+    }
+
     private AddTask = (task: Task) => {
         if (this.tasksDictionary === null) {
             this.tasksDictionary = {};
@@ -153,6 +161,6 @@ export class TaskManager {
 
         this.tasks = [...this.tasks, task];
         this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
-        this.InvokeOnUpdate();
+        EventManager.emit(TASK_ADDED_EVENT);
     }
 }

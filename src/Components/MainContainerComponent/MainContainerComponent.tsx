@@ -12,6 +12,7 @@ import { TaskManager } from "../../Classes/TaskManager";
 import { Task } from "../../Types/TaskType";
 import ListItemComponent from "../ListItemComponent/ListItemComponent";
 import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
+import EventManager, { TASK_ADDED_EVENT } from "../../Classes/EventManager";
 
 interface MainContainerComponentProps{
     listName: string;
@@ -42,8 +43,8 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         AutoFocusAddInput();
     }
 
-    const UpdateTasks = () => {
-        setTaskList(() => {
+    const UpdateTasks = async () => {
+        await setTaskList(() => {
             switch(props.listName) {
                 case LIST_NAME_TASKS:
                     return TaskManager.GetInstance().GetAllTasks();
@@ -62,9 +63,12 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         UpdateTasks();
     }
 
-    TaskManager.GetInstance().OnUpdate = () => {
-        UpdateAll();
-    }
+    useEffect(() => {
+        EventManager.addListener(TASK_ADDED_EVENT, UpdateTasks);
+        return () => {
+            EventManager.removeListener(TASK_ADDED_EVENT, UpdateTasks);
+        }
+    }, []);
 
     useEffect(() => {
         UpdateAll();
@@ -79,6 +83,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         if (event.key !== "Enter") return;
         if (!inputReference.current) return;
         TaskManager.GetInstance().CreateTask(inputReference.current.value);
+        ResetInput();
     };
 
     const HandleOnDate = () => {

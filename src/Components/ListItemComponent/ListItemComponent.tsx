@@ -5,6 +5,7 @@ import { Task } from "../../Types/TaskType";
 import { TaskManager } from "../../Classes/TaskManager";
 import { DONE_COLOR, SECONDARY_COLOR, STAR_COLOR } from "../../Colors";
 import StarIconComponent from "../StarComponent/StarIconComponent";
+import EventManager, { TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "../../Classes/EventManager";
 
 interface ListItemComponentProps{
     key: string;
@@ -19,13 +20,37 @@ const LIST_ITEM_COMPONENT_COLOR = SECONDARY_COLOR;
 const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
     const color = props.color === undefined ? LIST_ITEM_COMPONENT_COLOR : props.color;
+
     const [isImportant, setIsImportant] = useState<boolean>(props.task.isImportant);
     const [isDone, setIsDone] = useState<boolean>(props.task.isDone);
 
+    const UpdateImportancy = () => setIsImportant(props.task.isImportant);
+    const UpdateDone = () => setIsDone(props.task.isDone);
+
+    const CheckForImportancy = (taskID: string) => {
+        if (props.task.taskID !== taskID) return;
+        UpdateImportancy();
+    }
+
+    const CheckForDone = (taskID: string) => {
+        if (props.task.taskID !== taskID) return;
+        UpdateDone();
+    }
+
+    useEffect(() => {
+        EventManager.addListener(TASK_IMPORTANCY_CHANGED_EVENT, CheckForImportancy);
+        EventManager.addListener(TASK_DONE_CHANGED_EVENT, CheckForDone);
+    
+        return () => {
+            EventManager.removeListener(TASK_IMPORTANCY_CHANGED_EVENT, CheckForImportancy);
+            EventManager.removeListener(TASK_DONE_CHANGED_EVENT, CheckForDone);
+        }
+    }, []);
+
     // Update local state when taskList changes
     useEffect(() => {
-        setIsImportant(props.task.isImportant);
-        setIsDone(props.task.isDone);
+        UpdateImportancy();
+        UpdateDone();
     }, [props.id]);
 
     const HandleOnImportant = () => {
