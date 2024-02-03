@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { Task } from "../../Types/TaskType";
 import { TaskManager } from "../../Classes/TaskManager";
+import EventManager, { TASK_ADDED_EVENT } from "../../Classes/EventManager";
 
 var connection: HubConnection;
 
@@ -12,6 +13,16 @@ export const SendTask = (task: Task) => {
     }
 
     connection.invoke("SaveTask", task.taskID, task.taskName, task.taskList, task.dueDate, task.isImportant, task.isDone)
+    .catch(err => console.error("ConnectionError: ", err));
+}
+
+export const SaveTaskImportance = (taskID: string, isImportant: boolean) => {
+    connection.invoke("SaveTaskImportance", taskID, isImportant)
+    .catch(err => console.error("ConnectionError: ", err));
+}
+
+export const SaveTaskDone = (taskID: string, isDone: boolean) => {
+    connection.invoke("SaveTaskDone", taskID, isDone)
     .catch(err => console.error("ConnectionError: ", err));
 }
 
@@ -59,8 +70,16 @@ export const SignalRComponent = () => {
         connection.on("AddTask", (taskString: string) => {
             const task: Task = JSON.parse(taskString) as Task;
             TaskManager.GetInstance().AddTaskFromServer(task);
-        })
+        });
 
+        connection.on("ChangeTaskImportance", (taskID: string, isImportant: boolean) => {
+            TaskManager.GetInstance().UpdateTaskImportance(taskID, isImportant);
+        });
+        
+        connection.on("ChangeTaskDone", (taskID: string, isDone: boolean) => {
+            TaskManager.GetInstance().UpdateTaskDone(taskID, isDone);
+        });
+        
         return () => {
             connection.stop();
         };
