@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import TitleComponent from "../TitleComponent/TitleComponent";
-import DividerComponent from "../DividerComponent/DividerComponent";
-import { SECONDARY_COLOR } from "../../Colors";
-import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
-import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
-import "./MainContainerComponent.css";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import {CalendarDateAppointmentTime} from "react-basicons";
-import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogComponent";
-import { TaskManager } from "../../Classes/TaskManager";
-import { Task } from "../../Types/TaskType";
-import ListItemComponent from "../ListItemComponent/ListItemComponent";
-import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
+import { CalendarDateAppointmentTime } from "react-basicons";
 import EventManager, { TASK_ADDED_EVENT } from "../../Classes/EventManager";
+import { TaskManager } from "../../Classes/TaskManager";
+import { SECONDARY_COLOR } from "../../Colors";
+import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
+import { Task } from "../../Types/TaskType";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import DividerComponent from "../DividerComponent/DividerComponent";
+import DueDateDialogComponent from "../DueDateDialogComponent/DueDateDialogComponent";
+import EmptyListComponent from "../EmptyListComponent/EmptyListComponent";
+import EmptyMainContainerComponent from "../EmptyMainContainerComponent/EmptyMainContainerComponent";
+import ListItemComponent from "../ListItemComponent/ListItemComponent";
+import TitleComponent from "../TitleComponent/TitleComponent";
+import "./MainContainerComponent.css";
 
 interface MainContainerComponentProps{
     listName: string;

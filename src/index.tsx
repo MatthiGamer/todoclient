@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import SignalRComponent from "./Components/SignalRComponent/SignalRComponent";
 import MainComponent from "./Components/MainComponent/MainComponent";
+import SignalRComponent from "./Components/SignalRComponent/SignalRComponent";
+import "./index.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

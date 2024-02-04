@@ -1,10 +1,10 @@
+import { SHA256 } from "crypto-js";
 import { SaveTaskDone, SaveTaskImportance, SendTask } from "../Components/SignalRComponent/SignalRComponent";
 import { LIST_NAME_IMPORTANT, LIST_NAME_TODAY } from "../Consts";
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
-import { SHA256 } from "crypto-js";
-import { GetDateTypeFromDate } from "./Utils";
 import EventManager, { TASK_ADDED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
+import { GetDateTypeFromDate } from "./Utils";
 
 export class TaskManager {
     private static instance: TaskManager | null = null;

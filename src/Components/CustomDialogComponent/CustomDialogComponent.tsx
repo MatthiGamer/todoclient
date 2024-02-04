@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from "react";
-import "./CustomDialogComponent.css";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import "./CustomDialogComponent.css";
 
 interface CustomDialogComponentProps {
     header: string;

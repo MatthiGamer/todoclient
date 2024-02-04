@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import "./CustomEmptyComponent.css"
+import "./CustomEmptyComponent.css";
 
 const CustomEmptyComponent: React.FC<PropsWithChildren> = (props: PropsWithChildren) => {
     return(

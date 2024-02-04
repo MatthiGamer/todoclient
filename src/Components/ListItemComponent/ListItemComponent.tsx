@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import "./ListItemComponent.css";
-import { Task } from "../../Types/TaskType";
+import EventManager, { TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "../../Classes/EventManager";
 import { TaskManager } from "../../Classes/TaskManager";
 import { DONE_COLOR, SECONDARY_COLOR, STAR_COLOR } from "../../Colors";
+import { Task } from "../../Types/TaskType";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import StarIconComponent from "../StarComponent/StarIconComponent";
-import EventManager, { TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "../../Classes/EventManager";
+import "./ListItemComponent.css";
 
 interface ListItemComponentProps{
     key: string;

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import CustomDialogComponent from "../CustomDialogComponent/CustomDialogComponent";
-import { SECONDARY_COLOR } from "../../Colors";
-import DatePickerComponent from "../DatePickerComponent/DatePickerComponent";
 import { TaskManager } from "../../Classes/TaskManager";
 import { GetDateTypeFromDate } from "../../Classes/Utils";
+import { SECONDARY_COLOR } from "../../Colors";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import CustomDialogComponent from "../CustomDialogComponent/CustomDialogComponent";
+import DatePickerComponent from "../DatePickerComponent/DatePickerComponent";
 
 interface DueDateDialogComponentProps {
     isVisible: boolean;

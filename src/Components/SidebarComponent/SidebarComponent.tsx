@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "./SidebarComponent.css";
-import TitleComponent from "../TitleComponent/TitleComponent";
-import DividerComponent from "../DividerComponent/DividerComponent";
 import { PRIMARY_COLOR } from "../../Colors";
-import ListButtonComponent from "../ListButtonComponent/ListButtonComponent";
 import { LIST_NAME_IMPORTANT, LIST_NAME_OPTIONAL, LIST_NAME_TASKS, LIST_NAME_TODAY, LIST_NAME_TODO } from "../../Consts";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import AddListDialogComponent from "../AddListDialogComponent/AddListDialogComponent";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import DividerComponent from "../DividerComponent/DividerComponent";
+import ListButtonComponent from "../ListButtonComponent/ListButtonComponent";
+import TitleComponent from "../TitleComponent/TitleComponent";
+import "./SidebarComponent.css";
 
 interface SidebarComponentProps{
   setListName: (name: string) => void;

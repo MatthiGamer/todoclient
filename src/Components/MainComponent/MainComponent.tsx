@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import MainContainerComponent from "../MainContainerComponent/MainContainerComponent";
 import SidebarComponent from "../SidebarComponent/SidebarComponent";
 import "./MainComponent.css";
-import MainContainerComponent from "../MainContainerComponent/MainContainerComponent";
 
 const MainComponent: React.FC = () => {
 

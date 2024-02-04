@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { Task } from "../../Types/TaskType";
 import { TaskManager } from "../../Classes/TaskManager";
-import EventManager, { TASK_ADDED_EVENT } from "../../Classes/EventManager";
 
 var connection: HubConnection;
 

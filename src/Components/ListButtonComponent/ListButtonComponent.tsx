@@ -1,6 +1,6 @@
 import React from "react";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { TaskManager } from "../../Classes/TaskManager";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 interface ListButtonComponentProps{
     title: string;

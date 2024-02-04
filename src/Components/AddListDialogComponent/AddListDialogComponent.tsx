@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import CustomDialogComponent from "../CustomDialogComponent/CustomDialogComponent";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import "./AddListDialogComponent.css";
 import { SECONDARY_COLOR } from "../../Colors";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import CustomDialogComponent from "../CustomDialogComponent/CustomDialogComponent";
+import "./AddListDialogComponent.css";
 
 interface AddListDialogComponentProps {
     isVisible: boolean;

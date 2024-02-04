@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useRef } from "react";
 import "./DatePickerComponent.css";
 
 interface DatePickerComponentProps {
