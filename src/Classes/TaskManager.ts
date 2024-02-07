@@ -82,9 +82,7 @@ export class TaskManager {
     }
 
     public GetAllTasks = (): Task[] | undefined => {
-        // Get all tasks
-        // return list
-        return undefined;
+        return this.tasks === null ? undefined : this.tasks;
     }
 
     public GetTodayTasks = (): Task[] | undefined => {
