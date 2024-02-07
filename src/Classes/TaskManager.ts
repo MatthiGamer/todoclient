@@ -1,6 +1,6 @@
 import { SHA256 } from "crypto-js";
 import { SaveTaskDone, SaveTaskImportance, SendTask } from "../Components/SignalRComponent/SignalRComponent";
-import { LIST_NAME_IMPORTANT, LIST_NAME_TODAY } from "../Consts";
+import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../Consts";
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
 import EventManager, { TASK_ADDED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
@@ -107,7 +107,10 @@ export class TaskManager {
         const task: Task = {
             taskID: this.GenerateTaskID(),
             taskName: taskName,
-            taskList: this.currentList,
+            taskList:
+                this.currentList === LIST_NAME_TODAY ? LIST_NAME_TASKS :
+                this.currentList === LIST_NAME_IMPORTANT ? LIST_NAME_TASKS :
+                this.currentList,
             dueDate: this.currentList === LIST_NAME_TODAY ? this.GetTodayDate() : this.dueDate === undefined ? null : this.dueDate,
             isImportant: this.currentList === LIST_NAME_IMPORTANT,
             isDone: false
@@ -130,19 +133,18 @@ export class TaskManager {
     }
 
     private GetTaskByID = (taskID: string): Task | undefined => {
-        if (this.tasksDictionary === null) return;
-        if (this.currentList === null) return;
-        if (this.tasksDictionary[this.currentList] === undefined) return;
-
-        const tasks: Task[] = this.tasksDictionary[this.currentList];
-        const foundTask = tasks.find((task: Task) => task.taskID === taskID);
+        if (this.tasks === null) return;
+        const foundTask = this.tasks.find((task: Task) => task.taskID === taskID);
 
         return foundTask;
     }
 
     public AddTaskFromServer(task: Task | undefined) {
         if (task === undefined) return;
-        if (this.GetTaskByID(task.taskID) !== undefined) return;
+        if (this.GetTaskByID(task.taskID) !== undefined) {
+            console.log("Task exists.");
+            return;
+        }
         this.AddTask(task);
     }
 
@@ -161,6 +163,7 @@ export class TaskManager {
 
         this.tasks = [...this.tasks, task];
         this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
+
         EventManager.emit(TASK_ADDED_EVENT);
     }
 }
