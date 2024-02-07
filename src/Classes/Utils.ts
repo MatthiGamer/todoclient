@@ -9,3 +9,14 @@ export const GetDateTypeFromDate = (date: Date): DateType => {
 
     return dateType;
 }
+
+export const IsSameDate = (dateToTest: DateType | null | undefined, date: DateType | null | undefined): boolean => {
+    if (!dateToTest && !date) return true;
+    if (!dateToTest || !date) return false;
+
+    return (
+        dateToTest.day === date.day &&
+        dateToTest.month === date.month &&
+        dateToTest.year === date.year
+    )
+}

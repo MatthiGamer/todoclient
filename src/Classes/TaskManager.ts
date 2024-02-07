@@ -4,7 +4,7 @@ import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../Consts
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
 import EventManager, { TASK_ADDED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
-import { GetDateTypeFromDate } from "./Utils";
+import { GetDateTypeFromDate, IsSameDate } from "./Utils";
 
 export class TaskManager {
     private static instance: TaskManager | null = null;
@@ -87,9 +87,11 @@ export class TaskManager {
 
     public GetTodayTasks = (): Task[] | undefined => {
         const allTasks: Task[] | undefined = this.GetAllTasks();
-        // filter for dueDate == today
-        // return list
-        return undefined;
+        if (!allTasks) return undefined;
+
+        const today: DateType = this.GetTodayDate();
+        const todayTasks: Task[] = allTasks.filter(task => IsSameDate(task.dueDate, today));
+        return todayTasks.length === 0 ? undefined : todayTasks;
     }
 
     public GetImportantTasks = (): Task[] | undefined => {
