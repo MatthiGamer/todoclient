@@ -1,7 +1,7 @@
+import { HttpTransportType, HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel } from "@microsoft/signalr";
 import { useEffect } from "react";
-import { HubConnectionBuilder, LogLevel, HttpTransportType, HubConnection, HubConnectionState } from "@microsoft/signalr";
-import { Task } from "../../Types/TaskType";
 import { TaskManager } from "../../Classes/TaskManager";
+import { Task } from "../../Types/TaskType";
 
 var connection: HubConnection;
 
@@ -11,7 +11,7 @@ export const SendTask = (task: Task) => {
         return; // Add Buffer Queue
     }
 
-    connection.invoke("SaveTask", task.taskID, task.taskName, task.taskList, task.dueDate, task.isImportant, task.isDone)
+    connection.invoke("SaveTask", task.taskID, task.taskName, task.taskList, JSON.stringify(task.dueDate), task.isImportant, task.isDone)
     .catch(err => console.error("ConnectionError: ", err));
 }
 
