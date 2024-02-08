@@ -3,7 +3,7 @@ import { SaveTaskDone, SaveTaskImportance, SendTask } from "../Components/Signal
 import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../Consts";
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
-import EventManager, { TASK_ADDED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
+import EventManager, { TASK_ADDED_OR_REMOVED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
 import { GetDateTypeFromDate, IsSameDate } from "./Utils";
 
 export class TaskManager {
@@ -41,6 +41,10 @@ export class TaskManager {
         
         task.isImportant = isImportant;
         EventManager.emit(TASK_IMPORTANCY_CHANGED_EVENT, taskID);
+
+        if (this.currentList === LIST_NAME_IMPORTANT) {
+            EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
+        }
     }
 
     public SetTaskImportance = (taskID: string, isImportant: boolean) => {
@@ -96,9 +100,10 @@ export class TaskManager {
 
     public GetImportantTasks = (): Task[] | undefined => {
         const allTasks: Task[] | undefined = this.GetAllTasks();
-        // filter for isImportant == true
-        // return list
-        return undefined;
+        if (!allTasks) return undefined;
+
+        const importantTasks: Task[] = allTasks.filter(task => task.isImportant);
+        return importantTasks.length === 0 ? undefined : importantTasks;
     }
 
     public CreateTask = (taskName: string) => {
@@ -164,6 +169,6 @@ export class TaskManager {
         this.tasks = [...this.tasks, task];
         this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
 
-        EventManager.emit(TASK_ADDED_EVENT);
+        EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
     }
 }

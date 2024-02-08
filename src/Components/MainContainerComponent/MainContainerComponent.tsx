@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CalendarDateAppointmentTime } from "react-basicons";
-import EventManager, { TASK_ADDED_EVENT } from "../../Classes/EventManager";
+import EventManager, { TASK_ADDED_OR_REMOVED_EVENT } from "../../Classes/EventManager";
 import { TaskManager } from "../../Classes/TaskManager";
 import { SECONDARY_COLOR } from "../../Colors";
 import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
@@ -64,9 +64,9 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
     }
 
     useEffect(() => {
-        EventManager.addListener(TASK_ADDED_EVENT, UpdateTasks);
+        EventManager.addListener(TASK_ADDED_OR_REMOVED_EVENT, UpdateTasks);
         return () => {
-            EventManager.removeListener(TASK_ADDED_EVENT, UpdateTasks);
+            EventManager.removeListener(TASK_ADDED_OR_REMOVED_EVENT, UpdateTasks);
         }
     }, []);
 
