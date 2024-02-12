@@ -1,6 +1,19 @@
-# Getting Started with Create React App
+# Todo Client (WIP)
+This is the client application (Frontend) for my todo app. The server can be found here: [TodoServer](https://github.com/MatthiGamer/TodoServer)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## TechStack
+
+<!-- ReactJS -->
+<a href="https://react.dev/">
+    <img src="https://img.shields.io/badge/React.js-242729.svg?logo=react&logoColor=61DAFB" height="25"/></a>
+
+<!-- TypeScript -->
+<a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/TypeScript-007ACC.svg?labelColor=white&logo=typescript&logoColor=007ACC" height="25"/></a>
+
+<!-- ASP.NET SignalR -->
+<a href="https://learn.microsoft.com/de-de/dotnet/">
+  <img src="https://img.shields.io/badge/SignalR-512BD4?logo=.net&logoColor=white" height="25"/></a>
 
 ## Available Scripts
 
