@@ -1,0 +1,7 @@
+.clickableIcon {
+    height: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    cursor: pointer;
+    padding: 0px;
+}
