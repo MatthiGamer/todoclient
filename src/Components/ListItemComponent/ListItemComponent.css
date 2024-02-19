@@ -10,11 +10,3 @@
 #ListItemContainer :last-child {
     margin-right: 0px;
 }
-
-#StarContainer {
-    height: 36px;
-    width: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
