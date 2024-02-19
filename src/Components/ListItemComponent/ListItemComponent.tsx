@@ -5,6 +5,7 @@ import { DONE_COLOR, SECONDARY_COLOR, STAR_COLOR } from "../../Colors";
 import { Task } from "../../Types/TaskType";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import StarIconComponent from "../StarComponent/StarIconComponent";
+import TaskDialogComponent from "../TaskDialogComponent/TaskDialogComponent";
 import "./ListItemComponent.css";
 
 interface ListItemComponentProps{
@@ -12,7 +13,6 @@ interface ListItemComponentProps{
     id: string;
     task: Task;
     color?: string;
-    //method?: () => void; // =>  Open Info Panel
 }
 
 const LIST_ITEM_COMPONENT_COLOR = SECONDARY_COLOR;
@@ -23,6 +23,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
     const [isImportant, setIsImportant] = useState<boolean>(props.task.isImportant);
     const [isDone, setIsDone] = useState<boolean>(props.task.isDone);
+    const [isDialogVisible, setDialogVisibility] = useState<boolean>(false);
 
     const UpdateImportancy = () => setIsImportant(props.task.isImportant);
     const UpdateDone = () => setIsDone(props.task.isDone);
@@ -66,7 +67,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
     }
 
     const HandleOnClick = () => {
-        // Open Info Panel
+        setDialogVisibility(true);
     }
 
     return(
@@ -94,6 +95,8 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
                 color={color}
                 OnClick={HandleOnImportant}
             />
+
+            <TaskDialogComponent isVisible={isDialogVisible} task={props.task} setDialogVisibility={setDialogVisibility}/>
         </div>
     )
 }
