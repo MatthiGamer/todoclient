@@ -8,7 +8,6 @@ import ButtonComponent from "../ButtonComponent/ButtonComponent";
 interface TaskDoneButtonComponentProps {
     task: Task;
     color?: string;
-    doneColor?: string;
 }
 
 const TaskDoneButtonComponent: React.FC<TaskDoneButtonComponentProps> = (props) => {
