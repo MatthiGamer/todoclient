@@ -3,7 +3,6 @@ import { CalendarDateAppointmentTime } from "react-basicons";
 import EventManager, { TASK_ADDED_OR_REMOVED_EVENT } from "../../Classes/EventManager";
 import { TaskManager } from "../../Classes/TaskManager";
 import { SECONDARY_COLOR } from "../../Colors";
-import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
 import { Task } from "../../Types/TaskType";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
@@ -20,18 +19,7 @@ interface MainContainerComponentProps{
 
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
 
-    const [taskList, setTaskList] = useState<Task[] | undefined>(() => {
-        switch(props.listName) {
-            case LIST_NAME_TASKS:
-                return TaskManager.GetInstance().GetAllTasks();
-            case LIST_NAME_TODAY:
-                return TaskManager.GetInstance().GetTodayTasks();
-            case LIST_NAME_IMPORTANT:
-                return TaskManager.GetInstance().GetImportantTasks();
-            default:
-                return TaskManager.GetInstance().GetTasks();
-        }
-    });
+    const [taskList, setTaskList] = useState<Task[] | undefined>(TaskManager.GetInstance().GetTasks());
 
     const [isDateDialogVisible, setDateDialogVisibility] = useState<boolean>(false);
 
@@ -43,19 +31,8 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         AutoFocusAddInput();
     }
 
-    const UpdateTasks = async () => {
-        await setTaskList(() => {
-            switch(props.listName) {
-                case LIST_NAME_TASKS:
-                    return TaskManager.GetInstance().GetAllTasks();
-                case LIST_NAME_TODAY:
-                    return TaskManager.GetInstance().GetTodayTasks();
-                case LIST_NAME_IMPORTANT:
-                    return TaskManager.GetInstance().GetImportantTasks();
-                default:
-                    return TaskManager.GetInstance().GetTasks();
-            }
-        });
+    const UpdateTasks = () => {
+        setTaskList(TaskManager.GetInstance().GetTasks());
     }
 
     const UpdateAll = () => {

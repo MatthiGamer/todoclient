@@ -25,6 +25,8 @@ export class TaskManager {
         return TaskManager.instance;
     }
 
+    public GetCurrentList = () => {return this.currentList;}
+
     public SetTasks = (tasks: Task[] | undefined) => {
         if (tasks === undefined) {
             this.tasks = [];
@@ -75,7 +77,7 @@ export class TaskManager {
         this.dueDate = dueDate;
     }
 
-    public GetTasks = (): Task[] | undefined => {
+    private GetTasksForCurrentList = (): Task[] | undefined => {
         if (this.tasksDictionary === null ||
             this.currentList === null ||
             this.tasksDictionary[this.currentList] === undefined) {
@@ -85,11 +87,24 @@ export class TaskManager {
         return this.tasksDictionary[this.currentList];
     }
 
-    public GetAllTasks = (): Task[] | undefined => {
+    public GetTasks = (): Task[] | undefined => {
+        switch(this.currentList) {
+            case LIST_NAME_TASKS:
+                return this.GetAllTasks();
+            case LIST_NAME_TODAY:
+                return this.GetTodayTasks();
+            case LIST_NAME_IMPORTANT:
+                return this.GetImportantTasks();
+            default:
+                return this.GetTasksForCurrentList();
+        }
+    }
+
+    private GetAllTasks = (): Task[] | undefined => {
         return this.tasks === null ? undefined : this.tasks;
     }
 
-    public GetTodayTasks = (): Task[] | undefined => {
+    private GetTodayTasks = (): Task[] | undefined => {
         const allTasks: Task[] | undefined = this.GetAllTasks();
         if (!allTasks) return undefined;
 
@@ -98,7 +113,7 @@ export class TaskManager {
         return todayTasks.length === 0 ? undefined : todayTasks;
     }
 
-    public GetImportantTasks = (): Task[] | undefined => {
+    private GetImportantTasks = (): Task[] | undefined => {
         const allTasks: Task[] | undefined = this.GetAllTasks();
         if (!allTasks) return undefined;
 
