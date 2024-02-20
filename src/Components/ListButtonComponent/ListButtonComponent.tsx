@@ -5,13 +5,12 @@ import ButtonComponent from "../ButtonComponent/ButtonComponent";
 interface ListButtonComponentProps{
     title: string;
     color?: string;
-    setListName?: (title: string) => void;
+    setListName: (title: string) => void;
 }
 
 const ListButtonComponent: React.FC<ListButtonComponentProps> = (props) => {
 
     const HandleOnClick = () => {
-        if (props.setListName == undefined) return;
         props.setListName(props.title);
         TaskManager.GetInstance().SetCurrentList(props.title);
     }
