@@ -25,6 +25,11 @@ export const SaveTaskDone = (taskID: string, isDone: boolean) => {
     .catch(err => console.error("ConnectionError: ", err));
 }
 
+export const SendTaskDelete = (taskID: string) => {
+    connection.invoke("DeleteTask", taskID)
+    .catch(err => console.error("ConnectionError: ", err));
+}
+
 const GetTasks = async (): Promise<Task[] | undefined> => {
     return await connection.invoke<string>("GetTasks")
         .then((tasksString: string) => {
@@ -77,6 +82,10 @@ export const SignalRComponent = () => {
         
         connection.on("ChangeTaskDone", (taskID: string, isDone: boolean) => {
             TaskManager.GetInstance().UpdateTaskDone(taskID, isDone);
+        });
+        
+        connection.on("DeleteTask", (taskID: string) => {
+            TaskManager.GetInstance().DeleteTask(taskID);
         });
         
         return () => {
