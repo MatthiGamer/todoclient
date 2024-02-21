@@ -101,7 +101,7 @@ export class TaskManager {
     }
 
     private GetAllTasks = (): Task[] | undefined => {
-        return this.tasks === null ? undefined : this.tasks;
+        return (this.tasks === null || this.tasks.length == 0) ? undefined : this.tasks;
     }
 
     private GetTodayTasks = (): Task[] | undefined => {
@@ -153,7 +153,7 @@ export class TaskManager {
     }
 
     private GetTaskByID = (taskID: string): Task | undefined => {
-        if (this.tasks === null) return;
+        if (this.tasks === null) return undefined;
         const foundTask = this.tasks.find((task: Task) => task.taskID === taskID);
 
         return foundTask;
@@ -166,6 +166,17 @@ export class TaskManager {
             return;
         }
         this.AddTask(task);
+    }
+
+    public DeleteTask = (taskID: string) => {
+        const task: Task | undefined = this.GetTaskByID(taskID);
+        if (task === undefined) {
+            console.log("Task doesn't exist.");
+            return;
+        }
+        this.tasks = this.tasks!.filter((t) => t.taskID !== task.taskID);
+        this.tasksDictionary![task.taskList] = this.tasksDictionary![task.taskList].filter((t) => t.taskID !== task.taskID);
+        EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
     }
 
     private AddTask = (task: Task) => {
