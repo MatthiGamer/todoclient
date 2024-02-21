@@ -4,6 +4,7 @@ import { SECONDARY_COLOR } from "../../Colors";
 import "../../Styles/ClickableIcons.css";
 import { Task } from "../../Types/TaskType";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import TaskDeleteButtonComponent from "../TaskDeleteButtonComponent/TaskDeleteButtonComponent";
 import TaskDialogComponent from "../TaskDialogComponent/TaskDialogComponent";
 import TaskDoneButtonComponent from "../TaskDoneButtonComponent/TaskDoneButtonComponent";
 import TaskImportanceButtonComponent from "../TaskImportanceButtonComponent/TaskImportanceButtonComponent";
@@ -63,6 +64,8 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
             />
 
             <TaskImportanceButtonComponent task={props.task} isImportant={isImportant} setIsImportant={setIsImportant}/>
+
+            <TaskDeleteButtonComponent taskID={props.task.taskID}/>
 
             <TaskDialogComponent isVisible={isDialogVisible} task={props.task} setDialogVisibility={setDialogVisibility}/>
         </div>
