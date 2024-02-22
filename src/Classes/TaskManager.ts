@@ -7,6 +7,7 @@ import EventManager, { TASK_ADDED_OR_REMOVED_EVENT, TASK_DONE_CHANGED_EVENT, TAS
 import { GetDateTypeFromDate, IsSameDate } from "./Utils";
 
 export class TaskManager {
+    // Singleton instance
     private static instance: TaskManager | null = null;
 
     private currentList: string | null = null;
@@ -15,6 +16,7 @@ export class TaskManager {
     private tasksDictionary: { [key: string]: Task[] } | null = null;
     private tasks: Task[] | null = null;
     
+    // Hide default constructor
     private constructor() {}
 
     public static GetInstance(): TaskManager {
@@ -25,8 +27,6 @@ export class TaskManager {
         return TaskManager.instance;
     }
 
-    public GetCurrentList = () => {return this.currentList;}
-
     public SetTasks = (tasks: Task[] | undefined) => {
         if (tasks === undefined) {
             this.tasks = [];
@@ -36,6 +36,14 @@ export class TaskManager {
         tasks.forEach(task => this.AddTask(task));
     }
 
+    // Method to update importance and sent the change to the server
+    public SetTaskImportance = (taskID: string, isImportant: boolean) => {
+        this.UpdateTaskImportance(taskID, isImportant);
+        SaveTaskImportance(taskID, isImportant);
+    }
+
+    // Method to update the importance of a task without sending the changes to the server
+    // Used for client synchronisation
     public UpdateTaskImportance = (taskID: string, isImportant: boolean) => {
         const task = this.GetTaskByID(taskID);
         if (task === undefined) return;
@@ -44,16 +52,20 @@ export class TaskManager {
         task.isImportant = isImportant;
         EventManager.emit(TASK_IMPORTANCY_CHANGED_EVENT, taskID);
 
+        // Changing importance adds or removes tasks from the "Important" list
         if (this.currentList === LIST_NAME_IMPORTANT) {
             EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
         }
     }
 
-    public SetTaskImportance = (taskID: string, isImportant: boolean) => {
-        this.UpdateTaskImportance(taskID, isImportant);
-        SaveTaskImportance(taskID, isImportant);
+    // Method to update done status and sent the change to the server
+    public SetTaskDone = (taskID: string, isDone: boolean) => {
+        this.UpdateTaskDone(taskID, isDone);
+        SaveTaskDone(taskID, isDone);
     }
 
+    // Method to update the done status of a task without sending the changes to the server
+    // Used for client synchronisation
     public UpdateTaskDone = (taskID: string, isDone: boolean) => {
         const task = this.GetTaskByID(taskID);
         if (task === undefined) return;
@@ -61,11 +73,6 @@ export class TaskManager {
         
         task.isDone = isDone;
         EventManager.emit(TASK_DONE_CHANGED_EVENT, taskID);
-    }
-
-    public SetTaskDone = (taskID: string, isDone: boolean) => {
-        this.UpdateTaskDone(taskID, isDone);
-        SaveTaskDone(taskID, isDone);
     }
 
     public SetCurrentList = (listName: string | null) => {
@@ -159,6 +166,7 @@ export class TaskManager {
         return foundTask;
     }
 
+    // Used for client synchronisation
     public AddTaskFromServer(task: Task | undefined) {
         if (task === undefined) return;
         if (this.GetTaskByID(task.taskID) !== undefined) {
@@ -168,6 +176,7 @@ export class TaskManager {
         this.AddTask(task);
     }
 
+    // Used for client synchronisation
     public DeleteTask = (taskID: string) => {
         const task: Task | undefined = this.GetTaskByID(taskID);
         if (task === undefined) {

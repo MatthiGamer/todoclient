@@ -60,6 +60,7 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         if (event.key !== "Enter") return;
         if (!inputReference.current) return;
         TaskManager.GetInstance().CreateTask(inputReference.current.value);
+        TaskManager.GetInstance().SetDueDate(undefined);
         UpdateAll();
     };
 
