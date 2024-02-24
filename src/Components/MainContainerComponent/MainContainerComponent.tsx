@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { CalendarDateAppointmentTime } from "react-basicons";
-import EventManager, { TASK_ADDED_OR_REMOVED_EVENT } from "../../Classes/EventManager";
+import EventManager, { TASK_ADDED_OR_REMOVED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "../../Classes/EventManager";
 import { TaskManager } from "../../Classes/TaskManager";
 import { SECONDARY_COLOR } from "../../Colors";
 import { Task } from "../../Types/TaskType";
@@ -20,6 +20,7 @@ interface MainContainerComponentProps{
 const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) => {
 
     const [taskList, setTaskList] = useState<Task[] | undefined>(TaskManager.GetInstance().GetTasks());
+    const [_, forceUpdate] = useReducer(x => x + 1, 0);
 
     const [isDateDialogVisible, setDateDialogVisibility] = useState<boolean>(false);
 
@@ -35,6 +36,11 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
         setTaskList(TaskManager.GetInstance().GetTasks());
     }
 
+    const UpdateTaskListSort = () => {
+        if (taskList === undefined) return;
+        forceUpdate(); // Exception: Used for task sorting
+    }
+
     const UpdateAll = () => {
         ResetInput();
         UpdateTasks();
@@ -42,8 +48,12 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
     useEffect(() => {
         EventManager.addListener(TASK_ADDED_OR_REMOVED_EVENT, UpdateTasks);
+        EventManager.addListener(TASK_DONE_CHANGED_EVENT, UpdateTaskListSort);
+        EventManager.addListener(TASK_IMPORTANCY_CHANGED_EVENT, UpdateTaskListSort);
         return () => {
             EventManager.removeListener(TASK_ADDED_OR_REMOVED_EVENT, UpdateTasks);
+            EventManager.removeListener(TASK_DONE_CHANGED_EVENT, UpdateTaskListSort);
+            EventManager.removeListener(TASK_IMPORTANCY_CHANGED_EVENT, UpdateTaskListSort);
         }
     }, []);
 
@@ -78,8 +88,11 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
 
                 {taskList === undefined ? <EmptyListComponent/> :
                     <div>
-                        {taskList.map( (item: Task) => {
-                            return <ListItemComponent task={item} key={item.taskID} id={item.taskID}/>
+                        {taskList
+                            .sort((a, b) => (b.isImportant ? 1 : 0) - (a.isImportant ? 1 : 0))
+                            .sort((a, b) => (a.isDone ? 1 : 0) - (b.isDone ? 1 : 0))
+                            .map( (item: Task) => {
+                                return <ListItemComponent task={item} key={item.taskID} id={item.taskID}/>
                         })}
                     </div>
                 }
