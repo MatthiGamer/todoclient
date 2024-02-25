@@ -1,31 +1,31 @@
-class Queue<T> {
+export class Queue<T> {
     private items: T[];
 
     constructor() {
         this.items = [];
     }
 
-    enqueue(item: T): void {
+    public enqueue = (item: T): void => {
         this.items.push(item);
     }
 
-    dequeue(): T | undefined {
+    public dequeue = (): T | undefined => {
         return this.items.shift();
     }
 
-    peek(): T | undefined {
+    public peek = (): T | undefined => {
         return this.items.length > 0 ? this.items[0] : undefined;
     }
 
-    isEmpty(): boolean {
+    public isEmpty = (): boolean => {
         return this.items.length === 0;
     }
 
-    size(): number {
+    public size = (): number => {
         return this.items.length;
     }
 
-    clear(): void {
+    public clear = (): void => {
         this.items = [];
     }
 }
