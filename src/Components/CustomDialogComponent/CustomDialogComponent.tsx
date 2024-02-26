@@ -7,6 +7,7 @@ interface CustomDialogComponentProps {
     isVisible: boolean;
     color?: string;
     setDialogVisibility?: (isVisible: boolean) => void;
+    cancelButtonName?: string;
 }
 
 const CustomDialogComponent: React.FC<PropsWithChildren<CustomDialogComponentProps>> = (props) => {
@@ -18,6 +19,7 @@ const CustomDialogComponent: React.FC<PropsWithChildren<CustomDialogComponentPro
     }
 
     const CUSTOM_DIALOG_COLOR = props.color === undefined ? "black" : props.color;
+    const CANCEL_BUTTON_NAME = props.cancelButtonName ? props.cancelButtonName : "Cancel";
     
     return (
         !dialogIsVisible ? <></> :
@@ -25,7 +27,7 @@ const CustomDialogComponent: React.FC<PropsWithChildren<CustomDialogComponentPro
             <div id="Dialog">
                 <h2 id="DialogHeading" style={{color: CUSTOM_DIALOG_COLOR}}>{props.header}</h2>
                 {props.children}
-                <ButtonComponent title={"Cancel"} color={CUSTOM_DIALOG_COLOR} OnClick={HandleOnCancel}></ButtonComponent>
+                <ButtonComponent title={CANCEL_BUTTON_NAME} color={CUSTOM_DIALOG_COLOR} OnClick={HandleOnCancel}></ButtonComponent>
             </div>
         </div>
     )

@@ -1,0 +1,23 @@
+.TaskDialogLabel {
+    display: block;
+    font-size: larger;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+
+#TaskNotesArea {
+    font-size: large;
+    width: calc(100% - 15px);
+    padding: 5px;
+    resize: vertical;
+    color: var(--secondary-color);
+    border: 2px var(--secondary-color) solid;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+#TaskNotesArea:focus {
+    outline: none;
+}
