@@ -1,9 +1,8 @@
 import { SHA256 } from "crypto-js";
-import { SaveTaskDone, SaveTaskImportance, SendTask } from "../Components/SignalRComponent/SignalRComponent";
 import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../Consts";
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
-import EventManager, { TASK_ADDED_OR_REMOVED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "./EventManager";
+import EventManager, { SEND_ADDED_TASK_EVENT, SEND_CHANGED_TASK_DONE_STATUS_EVENT, SEND_CHANGED_TASK_IMPORTANCE_EVENT, SEND_REMOVED_TASK_EVENT, SYNCHRONIZE_ADDED_TASK_EVENT, SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, SYNCHRONIZE_REMOVED_TASK_EVENT } from "./EventManager";
 import { GetDateTypeFromDate, IsSameDate } from "./Utils";
 
 export class TaskManager {
@@ -13,6 +12,7 @@ export class TaskManager {
     private currentList: string | null = null;
     private dueDate: DateType | null | undefined = undefined;
 
+    // TODO: save tasks in local storage
     private tasksDictionary: { [key: string]: Task[] } | null = null;
     private tasks: Task[] | null = null;
     
@@ -27,52 +27,17 @@ export class TaskManager {
         return TaskManager.instance;
     }
 
+    // ---------------- //
+    // Property Methods //
+    // ---------------- //
+
     public SetTasks = (tasks: Task[] | undefined) => {
         if (tasks === undefined) {
             this.tasks = [];
             return;
         }
 
-        tasks.forEach(task => this.AddTask(task));
-    }
-
-    // Method to update importance and sent the change to the server
-    public SetTaskImportance = (taskID: string, isImportant: boolean) => {
-        this.UpdateTaskImportance(taskID, isImportant);
-        SaveTaskImportance(taskID, isImportant);
-    }
-
-    // Method to update the importance of a task without sending the changes to the server
-    // Used for client synchronisation
-    public UpdateTaskImportance = (taskID: string, isImportant: boolean) => {
-        const task = this.GetTaskByID(taskID);
-        if (task === undefined) return;
-        if (task.isImportant === isImportant) return;
-        
-        task.isImportant = isImportant;
-        EventManager.emit(TASK_IMPORTANCY_CHANGED_EVENT, taskID);
-
-        // Changing importance adds or removes tasks from the "Important" list
-        if (this.currentList === LIST_NAME_IMPORTANT) {
-            EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
-        }
-    }
-
-    // Method to update done status and sent the change to the server
-    public SetTaskDone = (taskID: string, isDone: boolean) => {
-        this.UpdateTaskDone(taskID, isDone);
-        SaveTaskDone(taskID, isDone);
-    }
-
-    // Method to update the done status of a task without sending the changes to the server
-    // Used for client synchronisation
-    public UpdateTaskDone = (taskID: string, isDone: boolean) => {
-        const task = this.GetTaskByID(taskID);
-        if (task === undefined) return;
-        if (task.isDone === isDone) return;
-        
-        task.isDone = isDone;
-        EventManager.emit(TASK_DONE_CHANGED_EVENT, taskID);
+        tasks.forEach(task => this.SynchronizeAddedTask(task));
     }
 
     public SetCurrentList = (listName: string | null) => {
@@ -128,25 +93,7 @@ export class TaskManager {
         return importantTasks.length === 0 ? undefined : importantTasks;
     }
 
-    public CreateTask = (taskName: string) => {
-        if (!this.currentList) return;
-
-        const task: Task = {
-            taskID: this.GenerateTaskID(),
-            taskName: taskName,
-            taskList:
-                this.currentList === LIST_NAME_TODAY ? LIST_NAME_TASKS :
-                this.currentList === LIST_NAME_IMPORTANT ? LIST_NAME_TASKS :
-                this.currentList,
-            dueDate: this.currentList === LIST_NAME_TODAY ? this.GetTodayDate() : this.dueDate === undefined ? null : this.dueDate,
-            isImportant: this.currentList === LIST_NAME_IMPORTANT,
-            isDone: false
-        };
-
-        this.AddTask(task);
-        SendTask(task);
-    }
-
+    // TODO: Add retry if task with taskID already exists to avoid hash collision
     private GenerateTaskID = (): string => {
         const date = new Date();
         const uniqueString = date.toUTCString() + " " + date.getUTCMilliseconds();
@@ -166,29 +113,14 @@ export class TaskManager {
         return foundTask;
     }
 
-    // Used for client synchronisation
-    public AddTaskFromServer(task: Task | undefined) {
+    // ------------------------------ //
+    // Client Synchronisation Methods //
+    // ------------------------------ //
+
+    public SynchronizeAddedTask = (task: Task | undefined) => {
         if (task === undefined) return;
-        if (this.GetTaskByID(task.taskID) !== undefined) {
-            console.log("Task exists.");
-            return;
-        }
-        this.AddTask(task);
-    }
+        if (this.GetTaskByID(task.taskID) !== undefined) return;
 
-    // Used for client synchronisation
-    public DeleteTask = (taskID: string) => {
-        const task: Task | undefined = this.GetTaskByID(taskID);
-        if (task === undefined) {
-            console.log("Task doesn't exist.");
-            return;
-        }
-        this.tasks = this.tasks!.filter((t) => t.taskID !== task.taskID);
-        this.tasksDictionary![task.taskList] = this.tasksDictionary![task.taskList].filter((t) => t.taskID !== task.taskID);
-        EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
-    }
-
-    private AddTask = (task: Task) => {
         if (this.tasksDictionary === null) {
             this.tasksDictionary = {};
         }
@@ -204,6 +136,77 @@ export class TaskManager {
         this.tasks = [...this.tasks, task];
         this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
 
-        EventManager.emit(TASK_ADDED_OR_REMOVED_EVENT);
+        EventManager.emit(SYNCHRONIZE_ADDED_TASK_EVENT, task);
+    }
+
+    public SynchronizeRemovedTask = (taskID: string) => {
+        const task: Task | undefined = this.GetTaskByID(taskID);
+        if (task === undefined) return;
+
+        this.tasks = this.tasks!.filter((t) => t.taskID !== task.taskID);
+        this.tasksDictionary![task.taskList] = this.tasksDictionary![task.taskList].filter((t) => t.taskID !== task.taskID);
+
+        EventManager.emit(SYNCHRONIZE_REMOVED_TASK_EVENT, taskID);
+    }
+
+    public SynchronizeTaskDoneStatus = (taskID: string, isDone: boolean) => {
+        const task = this.GetTaskByID(taskID);
+        if (task === undefined) return;
+        if (task.isDone === isDone) return;
+        
+        task.isDone = isDone;
+        EventManager.emit(SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, taskID, isDone);
+    }
+    
+    public SynchronizeTaskImportance = (taskID: string, isImportant: boolean) => {
+        const task = this.GetTaskByID(taskID);
+        if (task === undefined) return;
+        if (task.isImportant === isImportant) return;
+        
+        task.isImportant = isImportant;
+        EventManager.emit(SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, taskID, isImportant);
+
+        // Changing importance adds or removes tasks from the "Important" list
+        if (this.currentList === LIST_NAME_IMPORTANT) {
+            EventManager.emit(isImportant ? SYNCHRONIZE_ADDED_TASK_EVENT : SYNCHRONIZE_REMOVED_TASK_EVENT);
+        }
+    }
+
+    // --------------------- //
+    // Origin Client Methods //
+    // --------------------- //
+
+    public CreateTask = (taskName: string) => {
+        if (!this.currentList) return;
+
+        const task: Task = {
+            taskID: this.GenerateTaskID(),
+            taskName: taskName,
+            taskList:
+                this.currentList === LIST_NAME_TODAY ? LIST_NAME_TASKS :
+                this.currentList === LIST_NAME_IMPORTANT ? LIST_NAME_TASKS :
+                this.currentList,
+            dueDate: this.currentList === LIST_NAME_TODAY ? this.GetTodayDate() : this.dueDate === undefined ? null : this.dueDate,
+            isImportant: this.currentList === LIST_NAME_IMPORTANT,
+            isDone: false
+        };
+
+        this.SynchronizeAddedTask(task);
+        EventManager.emit(SEND_ADDED_TASK_EVENT, task);
+    }
+    
+    public RemoveTask = (taskID: string) => {
+        this.SynchronizeRemovedTask(taskID);
+        EventManager.emit(SEND_REMOVED_TASK_EVENT, taskID);
+    }
+
+    public UpdateTaskImportance = (taskID: string, isImportant: boolean) => {
+        this.SynchronizeTaskImportance(taskID, isImportant);
+        EventManager.emit(SEND_CHANGED_TASK_IMPORTANCE_EVENT, taskID, isImportant);
+    }
+
+    public UpdateTaskDoneStatus = (taskID: string, isDone: boolean) => {
+        this.SynchronizeTaskDoneStatus(taskID, isDone);
+        EventManager.emit(SEND_CHANGED_TASK_DONE_STATUS_EVENT, taskID, isDone);
     }
 }

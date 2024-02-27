@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EventManager, { TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "../../Classes/EventManager";
+import EventManager, { SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT } from "../../Classes/EventManager";
 import { SECONDARY_COLOR } from "../../Colors";
 import "../../Styles/ClickableIcons.css";
 import { Task } from "../../Types/TaskType";
@@ -29,11 +29,11 @@ const ListItemComponent: React.FC<ListItemComponentProps> = (props) => {
 
     // Used for client synchronisation
     useEffect(() => {
-        EventManager.addListener(TASK_DONE_CHANGED_EVENT, CheckForDone);
-        EventManager.addListener(TASK_IMPORTANCY_CHANGED_EVENT, CheckForImportance);
+        EventManager.addListener(SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, CheckForDone);
+        EventManager.addListener(SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, CheckForImportance);
         return () => {
-            EventManager.removeListener(TASK_DONE_CHANGED_EVENT, CheckForDone);
-            EventManager.removeListener(TASK_IMPORTANCY_CHANGED_EVENT, CheckForImportance);
+            EventManager.removeListener(SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, CheckForDone);
+            EventManager.removeListener(SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, CheckForImportance);
         }
     }, []);
 

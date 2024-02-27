@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { CalendarDateAppointmentTime } from "react-basicons";
-import EventManager, { TASK_ADDED_OR_REMOVED_EVENT, TASK_DONE_CHANGED_EVENT, TASK_IMPORTANCY_CHANGED_EVENT } from "../../Classes/EventManager";
+import EventManager, { SYNCHRONIZE_ADDED_TASK_EVENT, SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, SYNCHRONIZE_REMOVED_TASK_EVENT } from "../../Classes/EventManager";
 import { TaskManager } from "../../Classes/TaskManager";
 import { SECONDARY_COLOR } from "../../Colors";
 import { Task } from "../../Types/TaskType";
@@ -47,13 +47,15 @@ const MainContainerComponent: React.FC<MainContainerComponentProps> = (props) =>
     }
 
     useEffect(() => {
-        EventManager.addListener(TASK_ADDED_OR_REMOVED_EVENT, UpdateTasks);
-        EventManager.addListener(TASK_DONE_CHANGED_EVENT, UpdateTaskListSort);
-        EventManager.addListener(TASK_IMPORTANCY_CHANGED_EVENT, UpdateTaskListSort);
+        EventManager.addListener(SYNCHRONIZE_ADDED_TASK_EVENT, UpdateTasks);
+        EventManager.addListener(SYNCHRONIZE_REMOVED_TASK_EVENT, UpdateTasks);
+        EventManager.addListener(SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, UpdateTaskListSort);
+        EventManager.addListener(SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, UpdateTaskListSort);
         return () => {
-            EventManager.removeListener(TASK_ADDED_OR_REMOVED_EVENT, UpdateTasks);
-            EventManager.removeListener(TASK_DONE_CHANGED_EVENT, UpdateTaskListSort);
-            EventManager.removeListener(TASK_IMPORTANCY_CHANGED_EVENT, UpdateTaskListSort);
+            EventManager.removeListener(SYNCHRONIZE_ADDED_TASK_EVENT, UpdateTasks);
+            EventManager.removeListener(SYNCHRONIZE_REMOVED_TASK_EVENT, UpdateTasks);
+            EventManager.removeListener(SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, UpdateTaskListSort);
+            EventManager.removeListener(SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, UpdateTaskListSort);
         }
     }, []);
 

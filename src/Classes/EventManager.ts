@@ -2,8 +2,14 @@ import EventEmitter from "events";
 
 const EventManager = new EventEmitter();
 
-export const TASK_ADDED_OR_REMOVED_EVENT: string = "TaskAddedOrRemovedEvent";
-export const TASK_IMPORTANCY_CHANGED_EVENT: string = "TaskImportancyChangedEvent";
-export const TASK_DONE_CHANGED_EVENT: string = "TaskDoneChangedEvent";
+export const SEND_ADDED_TASK_EVENT: string = "SendAddedTaskEvent";
+export const SEND_REMOVED_TASK_EVENT: string = "SendRemovedTaskEvent";
+export const SEND_CHANGED_TASK_IMPORTANCE_EVENT: string = "SendChangedTaskImportanceEvent";
+export const SEND_CHANGED_TASK_DONE_STATUS_EVENT: string = "SendChangedTaskDoneStatusEvent";
+
+export const SYNCHRONIZE_ADDED_TASK_EVENT: string = "SynchronizeAddedTaskEvent";
+export const SYNCHRONIZE_REMOVED_TASK_EVENT: string = "SynchronizeRemovedTaskEvent";
+export const SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT: string = "SynchronizeChangedTaskImportanceEvent";
+export const SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT: string = "SynchronizeChangedTaskDoneStatusEvent";
 
 export default EventManager;

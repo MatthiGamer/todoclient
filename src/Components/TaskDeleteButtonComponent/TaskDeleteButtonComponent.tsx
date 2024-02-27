@@ -1,8 +1,8 @@
 import React from "react";
+import { TaskManager } from "../../Classes/TaskManager";
 import { SECONDARY_COLOR } from "../../Colors";
 import "../../Styles/ClickableIcons.css";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import { SendTaskDelete } from "../SignalRComponent/SignalRComponent";
 
 interface TaskDeleteButtonComponentProps {
     taskID: string;
@@ -11,7 +11,7 @@ interface TaskDeleteButtonComponentProps {
 const TaskDeleteButtonComponent: React.FC<TaskDeleteButtonComponentProps> = (props) => {
 
     const HandleOnDelete = () => {
-        SendTaskDelete(props.taskID);
+        TaskManager.GetInstance().RemoveTask(props.taskID);
     }
 
     return (

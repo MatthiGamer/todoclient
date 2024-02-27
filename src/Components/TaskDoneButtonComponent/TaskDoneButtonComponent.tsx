@@ -18,7 +18,7 @@ const TaskDoneButtonComponent: React.FC<TaskDoneButtonComponentProps> = (props) 
     const HandleOnDone = () => {
         const newIsDone: boolean = !props.isDone;
         props.setIsDone(newIsDone);
-        TaskManager.GetInstance().SetTaskDone(props.task.taskID, newIsDone);
+        TaskManager.GetInstance().UpdateTaskDoneStatus(props.task.taskID, newIsDone);
     }
 
     return (

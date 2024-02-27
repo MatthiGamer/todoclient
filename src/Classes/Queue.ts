@@ -1,8 +1,17 @@
+
 export class Queue<T> {
     private items: T[];
 
     constructor() {
         this.items = [];
+    }
+
+    public enqueueArray = (elementsArray: T[]) => {
+        elementsArray.forEach(element => this.enqueue(element));
+    }
+
+    public toArray = (): T[] => {
+        return this.items;
     }
 
     public enqueue = (item: T): void => {

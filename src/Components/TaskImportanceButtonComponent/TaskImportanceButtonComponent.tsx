@@ -21,7 +21,7 @@ const TaskImportanceButtonComponent: React.FC<TaskImportanceButtonComponentProps
     const HandleOnImportant = () => {
         const newIsImportant: boolean = !props.isImportant;
         props.setIsImportant(newIsImportant);
-        TaskManager.GetInstance().SetTaskImportance(props.task.taskID, newIsImportant);
+        TaskManager.GetInstance().UpdateTaskImportance(props.task.taskID, newIsImportant);
     }
 
     return (
