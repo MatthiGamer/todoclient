@@ -93,12 +93,12 @@ export class TaskManager {
         return importantTasks.length === 0 ? undefined : importantTasks;
     }
 
-    // TODO: Add retry if task with taskID already exists to avoid hash collision
     private GenerateTaskID = (): string => {
         const date = new Date();
         const uniqueString = date.toUTCString() + " " + date.getUTCMilliseconds();
         const hash = SHA256(uniqueString);
-        return hash.toString();
+        const hashString = hash.toString();
+        return this.GetTaskByID(hashString) === undefined ? hashString : this.GenerateTaskID();
     }
 
     private GetTodayDate = (): DateType => {
