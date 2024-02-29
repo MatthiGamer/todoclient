@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PRIMARY_COLOR } from "../../Colors";
-import { LIST_NAME_IMPORTANT, LIST_NAME_OPTIONAL, LIST_NAME_TASKS, LIST_NAME_TODAY, LIST_NAME_TODO } from "../../Consts";
+import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../../Consts";
 import AddListDialogComponent from "../AddListDialogComponent/AddListDialogComponent";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import DividerComponent from "../DividerComponent/DividerComponent";
@@ -18,8 +18,6 @@ const primaryLists = [
   {name: LIST_NAME_TODAY},      // All tasks due to today [filled automatically]
   {name: LIST_NAME_IMPORTANT},  // All tasks marked as important [filled automatically]
   {name: LIST_NAME_TASKS},      // All tasks [filled automatically]
-  {name: LIST_NAME_TODO},       // All tasks that have to be done today [filled by user]
-  {name: LIST_NAME_OPTIONAL},   // All tasks that could be done today [filled by user]
 ];
 
 const SidebarComponent: React.FC<SidebarComponentProps> = ({ setListName }) => {
