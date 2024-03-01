@@ -1,9 +1,16 @@
 .TaskDialogLabel {
     display: block;
+    color: var(--secondary-color);
+}
+
+.TaskDialogHeadingLabel {
     font-size: larger;
     font-weight: 600;
     margin-bottom: 5px;
-    color: var(--secondary-color);
+}
+
+.TaskDialogSubLabel {
+    font-size: large;
 }
 
 #TaskNotesArea {

@@ -42,17 +42,23 @@ const TaskDialogComponent: React.FC<TaskDialogComponentProps> = (props) => {
         color={SECONDARY_COLOR}
         setDialogVisibility={props.setDialogVisibility}
         cancelButtonName="Back">
-            <label className="TaskDialogLabel">Due date:</label>
-            <label style={{display: "block", fontSize: "large"}}>{dateString}</label>
+            <label className="TaskDialogLabel TaskDialogHeadingLabel">Task list:</label>
+            <label className="TaskDialogLabel TaskDialogSubLabel">{props.task.taskList}</label>
             <br/>
-            <label className="TaskDialogLabel">Task Controls:</label>
+
+            <label className="TaskDialogLabel TaskDialogHeadingLabel">Due date:</label>
+            <label className="TaskDialogLabel TaskDialogSubLabel">{dateString}</label>
+            <br/>
+
+            <label className="TaskDialogLabel TaskDialogHeadingLabel">Task Controls:</label>
             <div style={{display: "flex"}}>
                 <TaskDoneButtonComponent task={props.task} isDone={isDone} setIsDone={setIsDone}/>
                 <TaskImportanceButtonComponent task={props.task} isImportant={isImportant} setIsImportant={setIsImportant}/>
                 <TaskDeleteButtonComponent taskID={props.task.taskID}/>
             </div>
             <br/>
-            <label className="TaskDialogLabel">Notes:</label>
+
+            <label className="TaskDialogLabel TaskDialogHeadingLabel">Notes:</label>
             <textarea id="TaskNotesArea"/>
         </CustomDialogComponent>
     )
