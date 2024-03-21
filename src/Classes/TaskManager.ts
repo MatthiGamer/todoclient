@@ -13,8 +13,8 @@ export class TaskManager {
     private dueDate: DateType | null | undefined = undefined;
 
     // TODO: save tasks in local storage
-    private tasksDictionary: { [key: string]: Task[] } | null = null;
     private tasks: Task[] | null = null;
+    private tasksDictionary: { [key: string]: Task[] } | null = null;
     
     // Hide default constructor
     private constructor() {}

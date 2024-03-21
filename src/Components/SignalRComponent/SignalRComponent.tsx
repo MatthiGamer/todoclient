@@ -8,7 +8,7 @@ import { Task } from "../../Types/TaskType";
 
 var connection: HubConnection;
 
-export const SignalRComponent = () => {
+const SignalRComponent = () => {
     
     // ----------------- //
     // Task Buffer Queue //
