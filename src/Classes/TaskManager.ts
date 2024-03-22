@@ -1,5 +1,5 @@
 import { SHA256 } from "crypto-js";
-import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY } from "../Consts";
+import { LIST_NAME_IMPORTANT, LIST_NAME_TASKS, LIST_NAME_TODAY, LOCAL_TASKS_KEY } from "../Consts";
 import { DateType } from "../Types/DateType";
 import { Task } from "../Types/TaskType";
 import EventManager, { SEND_ADDED_TASK_EVENT, SEND_CHANGED_TASK_DONE_STATUS_EVENT, SEND_CHANGED_TASK_IMPORTANCE_EVENT, SEND_REMOVED_TASK_EVENT, SYNCHRONIZE_ADDED_TASK_EVENT, SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, SYNCHRONIZE_REMOVED_TASK_EVENT } from "./EventManager";
@@ -15,6 +15,7 @@ export class TaskManager {
     // TODO: save tasks in local storage
     private tasks: Task[] | null = null;
     private tasksDictionary: { [key: string]: Task[] } | null = null;
+    private localTasksInitialized: boolean = false;
     
     // Hide default constructor
     private constructor() {}
@@ -27,17 +28,34 @@ export class TaskManager {
         return TaskManager.instance;
     }
 
+    // ----------- //
+    // Local Tasks //
+    // ----------- //
+
+    private SaveTasksLocally = () => {
+        localStorage.setItem(LOCAL_TASKS_KEY, JSON.stringify(this.tasks));
+    }
+
+    public InitializeLocalTasks = () => {
+        if (this.localTasksInitialized === true) return;
+        const localTasksString = localStorage.getItem(LOCAL_TASKS_KEY);
+        const localTasks: Task[] = localTasksString === null ? [] : JSON.parse(localTasksString) as Task[];
+        if(localTasks.length > 0) this.AddMultipleTasks(localTasks);
+        this.localTasksInitialized = true;
+    }
+
     // ---------------- //
     // Property Methods //
     // ---------------- //
 
-    public SetTasks = (tasks: Task[] | undefined) => {
+    public AddMultipleTasks = (tasks: Task[] | undefined) => {
         if (tasks === undefined) {
             this.tasks = [];
             return;
         }
 
-        tasks.forEach(task => this.SynchronizeAddedTask(task));
+        tasks.forEach(task => this.SynchronizeAddedTask(task, true));
+        this.SaveTasksLocally();
     }
 
     public SetCurrentList = (listName: string | null) => {
@@ -117,7 +135,7 @@ export class TaskManager {
     // Client Synchronisation Methods //
     // ------------------------------ //
 
-    public SynchronizeAddedTask = (task: Task | undefined) => {
+    public SynchronizeAddedTask = (task: Task | undefined, skipLocalStorage: boolean = false) => {
         if (task === undefined) return;
         if (this.GetTaskByID(task.taskID) !== undefined) return;
 
@@ -137,6 +155,7 @@ export class TaskManager {
         this.tasksDictionary[task.taskList] = [...this.tasksDictionary[task.taskList], task];
 
         EventManager.emit(SYNCHRONIZE_ADDED_TASK_EVENT, task);
+        if (!skipLocalStorage) this.SaveTasksLocally();
     }
 
     public SynchronizeRemovedTask = (taskID: string) => {
@@ -147,6 +166,7 @@ export class TaskManager {
         this.tasksDictionary![task.taskList] = this.tasksDictionary![task.taskList].filter((t) => t.taskID !== task.taskID);
 
         EventManager.emit(SYNCHRONIZE_REMOVED_TASK_EVENT, taskID);
+        this.SaveTasksLocally();
     }
 
     public SynchronizeTaskDoneStatus = (taskID: string, isDone: boolean) => {
@@ -156,6 +176,7 @@ export class TaskManager {
         
         task.isDone = isDone;
         EventManager.emit(SYNCHRONIZE_CHANGED_TASK_DONE_STATUS_EVENT, taskID, isDone);
+        this.SaveTasksLocally();
     }
     
     public SynchronizeTaskImportance = (taskID: string, isImportant: boolean) => {
@@ -165,6 +186,7 @@ export class TaskManager {
         
         task.isImportant = isImportant;
         EventManager.emit(SYNCHRONIZE_CHANGED_TASK_IMPORTANCE_EVENT, taskID, isImportant);
+        this.SaveTasksLocally();
 
         // Changing importance adds or removes tasks from the "Important" list
         if (this.currentList === LIST_NAME_IMPORTANT) {

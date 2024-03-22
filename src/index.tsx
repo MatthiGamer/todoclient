@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <SignalRComponent/>
     <MainComponent/>
+    <SignalRComponent/>
   </React.StrictMode>
 );

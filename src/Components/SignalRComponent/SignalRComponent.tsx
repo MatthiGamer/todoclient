@@ -18,7 +18,7 @@ const SignalRComponent = () => {
     const taskBufferQueueString: string | null = localStorage.getItem(TASK_BUFFER_QUEUE_KEY);
     const tasks: Task[] = taskBufferQueueString === null ? [] : JSON.parse(taskBufferQueueString) as Task[];
     if(tasks.length > 0) taskBufferQueue.enqueueArray(tasks);
-    tasks.forEach(task => TaskManager.GetInstance().SynchronizeAddedTask(task));
+    TaskManager.GetInstance().AddMultipleTasks(tasks);
     console.log("Tasks locally synchronized.");
 
     // ----------------------------- //
@@ -103,12 +103,11 @@ const SignalRComponent = () => {
     }
 
     const SynchronizeTasksOnConnect = async () => {
-        TaskManager.GetInstance().SetTasks(await GetTasks());
+        TaskManager.GetInstance().AddMultipleTasks(await GetTasks());
         if (taskBufferQueue.isEmpty()) return;
         while (!taskBufferQueue.isEmpty()) {
             const task: Task | undefined = taskBufferQueue.dequeue();
             if (task === undefined) continue;
-            TaskManager.GetInstance().SynchronizeAddedTask(task);
             SendTask(task);
         }
     }
