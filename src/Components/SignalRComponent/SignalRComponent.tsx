@@ -18,8 +18,6 @@ const SignalRComponent = () => {
     const taskBufferQueueString: string | null = localStorage.getItem(TASK_BUFFER_QUEUE_KEY);
     const tasks: Task[] = taskBufferQueueString === null ? [] : JSON.parse(taskBufferQueueString) as Task[];
     if(tasks.length > 0) taskBufferQueue.enqueueArray(tasks);
-    TaskManager.GetInstance().AddMultipleTasks(tasks);
-    console.log("Tasks locally synchronized.");
 
     // ----------------------------- //
     // Connection and Server Methods //
